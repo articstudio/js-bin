@@ -1,9 +1,23 @@
 {
-  "name": "pigmento-sminkon-core", "version": "0.0.1", "description": "Pigmento Sminkon Core", "main": "index.js", "scripts": {}, "repository": {
-    "type": "git", "url": "git+https://github.com/articstudio/pigmento-sminkon-core.git"
-  }, "keywords": [], "author": [
-      {
-          "name": "Marc Mascort Bou", "email": "marc@articstudio.com"
-        }
-    ], "license": "UNLICENSED", "homepage": "https://github.com/articstudio/pigmento-sminkon-core", "devDependencies": {}, "dependencies": {}
+  "name": "pigmento-sminkon-core",
+  "version": "0.0.1",
+  "description": "Pigmento Sminkon Core",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/articstudio/pigmento-sminkon-core.git"
+  },
+  "keywords": [],
+  "author": [
+    {
+      "name": "Marc Mascort Bou",
+      "email": "marc@articstudio.com"
+    }
+  ],
+  "license":
+  "UNLICENSED",
+  "homepage": "https://github.com/articstudio/pigmento-sminkon-core",
+  "devDependencies": {},
+  "dependencies": {}
 }
