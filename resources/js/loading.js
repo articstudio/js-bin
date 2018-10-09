@@ -1,6 +1,4 @@
-
 /* Basic loader */
-//let load = require('@prepair/basic-loader');
 let load = require('./lib/loader');
 let UserAgentParser = require('ua-parser-js');
 let outdatedBrowserRework = require('outdated-browser-rework');
@@ -97,28 +95,6 @@ module.exports = (function () {
                     }, function (response) {
                         console.log('Icebergs: error loading CSS');
                     });
-
-//                    load.css(_icebergs.css).then(function (result) {
-//                        console.log(result);
-//                        cache.css = {
-//                            url: result.url,
-//                            content: result.element.innerHTML
-//                        };
-//                        load.js(_icebergs.js).then(function (result) {
-//                            console.log(result);
-//                            cache.js = {
-//                                url: result.url,
-//                                content: result.element.innerHTML
-//                            };
-//                            console.log(cache);
-//                            //w.icebergsLoaded = true;
-//                            console.log('Icebergs: Loaded');
-//                        }).catch(function (e) {
-//                            console.log('Icebergs: error loading JS', e);
-//                        });
-//                    }).catch(function (e) {
-//                        console.log('Icebergs: error loading CSS', e);
-//                    });
                 };
 
         try {
@@ -138,9 +114,7 @@ module.exports = (function () {
     };
 
     var parsedUserAgent = new UserAgentParser(window.navigator.userAgent).getResult();
-    //console.log(parsedUserAgent);
     if (parsedUserAgent.browser.name && parsedUserAgent.browser.name.indexOf('WebView') === -1 && parsedUserAgent.browser.name.indexOf('WebKit') === -1) {
-        //alert(parsedUserAgent.ua);
         outdatedBrowserRework({
             browserSupport: {
                 'Chrome': 57,

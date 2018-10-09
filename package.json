@@ -11,13 +11,16 @@
   "keywords": [],
   "author": [
     {
-      "name": "Marc Mascort Bou",
-      "email": "marc@articstudio.com"
+      "name": "Artic studio",
+      "email": "developers@articstudio.com"
     }
   ],
   "license":
   "UNLICENSED",
   "homepage": "https://github.com/articstudio/pigmento-sminkon-core",
-  "devDependencies": {},
+  "devDependencies": {
+    "ua-parser-js": "^0.7.17",
+    "outdated-browser-rework": "^2.1.4"
+  },
   "dependencies": {}
-} 
+}
