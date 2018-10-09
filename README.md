@@ -1,2 +1,2 @@
-# pigmento-sminkon-core
-[READ ONLY] Sminkon Core
+# pigmento-sminkon-core 
+[READ ONLY] Sminkon Core 
