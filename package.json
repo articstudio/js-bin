@@ -15,8 +15,7 @@
       "email": "developers@articstudio.com"
     }
   ],
-  "license":
-  "UNLICENSED",
+  "license": "UNLICENSED",
   "homepage": "https://github.com/articstudio/pigmento-sminkon-core",
   "devDependencies": {
     "ua-parser-js": "^0.7.17",
