@@ -1,5 +1,5 @@
 <% var hash = htmlWebpackPlugin.options.ento.hash(); %><!DOCTYPE html>
-<html data-ng-app="icebergs" data-ng-controller="HTMLController as html">
+<html data-ng-app="ento" data-ng-controller="HTMLController as html">
     <head>
         <!-- Config -->
         <meta charset="UTF-8">
@@ -7,7 +7,7 @@
         <base href="/">
 
         <!-- Document metatags -->
-        <title data-page-title>Icebergs</title>
+        <title data-page-title>Ento</title>
 
         <!-- Icons -->
         <link rel="icon" type="image/png" href="<%= process.env.APP_URL %>favicon.png" />
@@ -15,11 +15,11 @@
         <!-- Angular -->
         <meta name="fragment" content="!" />
 
-        <!-- Icebergs -->
+        <!-- Ento -->
         <script type="text/javascript">
             var _ento = {
-                js: '<%= process.env.APP_URL %><%= htmlWebpackPlugin.options.ento.main.js %>?<%= hash %>',
-                css: '<%= process.env.APP_URL %><%= htmlWebpackPlugin.options.ento.main.css %>?<%= hash %>',
+                js: '',
+                css: '',
                 icon: '<%- htmlWebpackPlugin.options.ento.icon %>',
                 logo_artic: '<%- htmlWebpackPlugin.options.ento.logo_artic %>',
                 logo: '<%- htmlWebpackPlugin.options.ento.logo %>',
@@ -38,9 +38,11 @@
             };
         </script>
 
+
         <!-- Loading -->
-        <link rel="stylesheet" href="<%= process.env.APP_URL %><%= htmlWebpackPlugin.options.ento.loading.css %>?<%= hash %>">
-        <script type="text/javascript" src="<%= process.env.APP_URL %><%= htmlWebpackPlugin.options.ento.loading.js %>?<%= hash %>"></script>
+        <link rel="stylesheet" href="<%= process.env.APP_URL %>/css/loading.css?<%= hash %>">
+        <script type="text/javascript" src="<%= process.env.APP_URL %>/js/loading.js?<%= hash %>"></script>
+
     </head>
     <body id="top" data-ng-class="body.class">
 

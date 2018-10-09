@@ -11,15 +11,15 @@ module.exports = (function () {
     var w = window || {},
             d = document || {};
 
-    w.icebergsLoadingInit = false;
-    w.icebergsLoaded = false;
-    var icebergsLoader = function () {
+    w.entoLoadingInit = false;
+    w.entoLoaded = false;
+    var entoLoader = function () {
 
-        if (w.icebergsLoadingInit) {
+        if (w.entoLoadingInit) {
             return;
         }
 
-        w.icebergsLoadingInit = true;
+        w.entoLoadingInit = true;
 
         const promiseSerial = function (fs) {
             return  fs.reduce(function (p, f) {
@@ -36,7 +36,7 @@ module.exports = (function () {
                 spinner = d.createElement('div'),
                 img = d.createElement('img'),
                 version = d.createElement('div'),
-                versionText = d.createTextNode('v' + _icebergs.version + '-' + _icebergs.hash + ''),
+                versionText = d.createTextNode('v' + _ento.version + '-' + _ento.hash + ''),
                 count = 0,
                 max = 5,
                 div,
@@ -52,7 +52,7 @@ module.exports = (function () {
                     container.id = 'ento-loading';
                     spinner.className = 'spinner';
                     img.className = 'logo';
-                    img.src = _icebergs.logo;
+                    img.src = _ento.logo;
                     for (count; count < max; ++count)
                     {
                         div = d.createElement('div');
@@ -68,46 +68,46 @@ module.exports = (function () {
                 },
                 loadDeferredCSS = function (cb) {
                     var l = [], i;
-                    for (i in _icebergs.css) {
-                        l.push(load.css(_icebergs.css[i]));
+                    for (i in _ento.css) {
+                        l.push(load.css(_ento.css[i]));
                     }
                     return Promise.all(l);
                 },
                 loadDeferredJS = function () {
-                    const fsm = _icebergs.js.map(function (s) {
+                    const fsm = _ento.js.map(function (s) {
                         return load.js(s);
                     });
 
                     return promiseSerial(fsm);
                 },
                 loadDeferreds = function () {
-                    load.async('style', _icebergs.css).then(function (response) {
+                    load.async('style', _ento.css).then(function (response) {
                         cache.css = response;
-                        load.async('script', _icebergs.js).then(function (response) {
+                        load.async('script', _ento.js).then(function (response) {
                             cache.js = response;
                             //console.log('async OK', response);
 
-                            w.icebergsLoaded = true;
-                            console.log('Icebergs: Loaded');
+                            w.entoLoaded = true;
+                            console.log('Ento: Loaded');
                         }, function (response) {
-                            console.log('Icebergs: error loading JS');
+                            console.log('Ento: error loading JS');
                         });
                     }, function (response) {
-                        console.log('Icebergs: error loading CSS');
+                        console.log('Ento: error loading CSS');
                     });
                 };
 
         try {
-            w._icebergs = _icebergs || {};
+            w._ento = _ento || {};
             createLoadingTemplate();
             var cache_hash = localStorage.getItem('deferreds_cache_hash');
-            if (cache_hash === _icebergs.hash) {
+            if (cache_hash === _ento.hash) {
 
             } else {
                 loadDeferreds();
             }
         } catch (e) {
-            w.icebergsLoadingInit = true;
+            w.entoLoadingInit = true;
             return;
         }
 
@@ -131,17 +131,17 @@ module.exports = (function () {
         });
     } else {
         // Webview
-        _icebergs.webview = parsedUserAgent.os.name;
+        _ento.webview = parsedUserAgent.os.name;
     }
 
 
     var raf = w.requestAnimationFrame || w.mozRequestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame;
     if (raf) {
         raf(function () {
-            w.setTimeout(icebergsLoader, 0);
+            w.setTimeout(entoLoader, 0);
         });
     } else {
-        w.addEventListener('load', icebergsLoader);
+        w.addEventListener('load', entoLoader);
     }
 
 })();
