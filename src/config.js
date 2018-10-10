@@ -9,6 +9,7 @@ module.exports = (function () {
         assets: {},
         entry: {},
         alias: [],
+        images: [],
         template: null
     };
 
@@ -28,10 +29,18 @@ module.exports = (function () {
             return config.entry;
         },
         //
+        addImage: function (key, value) {
+            config.images[key] = value;
+
+        },
+        getImages: function () {
+            return config.images;
+        },
+        //
         setVersion: function (value) {
             config.version = value;
         },
-        setAssets: function (key, value) {
+        setAsset: function (key, value) {
             config.assets[key] = value;
         },
         getAsset: function(key) {
@@ -44,13 +53,9 @@ module.exports = (function () {
         getConfig: function () {
             return {
                 hash: config.hash,
-                logo_author: 'images/author.svg',
-                logo: 'images/logo.svg',
-                logo_horizontal: 'images/logo_horizontal.svg',
-                icon: 'images/icon.svg',
-                develop: true,
-                version: config.version,
-                assets: config.assets
+                images: config.images,
+                develop: !!(process.env.NODE_ENV !== 'production'),
+                version: config.version
             };
         }
     };
