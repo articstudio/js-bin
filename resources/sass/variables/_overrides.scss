@@ -7,11 +7,11 @@ $font-family-serif:             Georgia, "Times New Roman", Times, serif;
 $font-family-monospace:         Menlo, Monaco, Consolas, "Courier New", monospace;
 $font-family-base:              $font-family-sans-serif;
 // Colors
-$brand-primary:                 $icebergs-blue-light;
-$brand-success:                 $icebergs-blue;
-$brand-info:                    $icebergs-raw-light;
-$brand-warning:                 $icebergs-yellow;
-$brand-danger:                  $icebergs-red;
+$brand-primary:                 $ento-blue-light;
+$brand-success:                 $ento-blue;
+$brand-info:                    $ento-raw-light;
+$brand-warning:                 $ento-yellow;
+$brand-danger:                  $ento-red;
 // Buttons
 $btn-default-color:             $grey;
 $btn-default-bg:                $white;
@@ -23,4 +23,4 @@ $fa-font-path:                  $path-fonts;
 // ==== SpinKit
 $spinkit-spinner-margin: 0px auto;
 $spinkit-size: 40px;
-$spinkit-spinner-color: $icebergs-blue-light;
+$spinkit-spinner-color: $ento-blue-light;

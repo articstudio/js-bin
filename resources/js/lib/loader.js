@@ -5,18 +5,18 @@ module.exports = (function () {
     var _createAsyncTag = function (tag) {
         var element = _createTag(tag);
         return [element, new Promise(function (resolve, reject) {
-                element.onload = function () {
-                    return resolve(element);
-                };
-                element.onerror = function () {
-                    return reject(element);
-                };
-            })];
+            element.onload = function () {
+                return resolve(element);
+            };
+            element.onerror = function () {
+                return reject(element);
+            };
+        })];
     };
 
     var _createTag = function (tag) {
         var element = document.createElement(tag),
-                parent = 'body';
+            parent = 'body';
         switch (tag) {
             case 'script':
                 element.async = true;
@@ -37,7 +37,7 @@ module.exports = (function () {
 
     var _load = function (tag, content) {
         var e = _createTag(tag),
-                attr = 'text';
+            attr = 'text';
         switch (tag) {
             case 'script':
                 break;
@@ -71,5 +71,5 @@ module.exports = (function () {
         sync: _load,
         async: _loadAsync
     }
-    ;
+        ;
 })();

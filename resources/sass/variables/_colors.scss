@@ -7,40 +7,40 @@ $grey-light:                #ccc;
 $yellow:                    #FEA825;
 
 // Corporative
-$icebergs-dark:            #19333e;
-$icebergs-light:           #eeebe7;
+$ento-dark:            #19333e;
+$ento-light:           #eeebe7;
 
-$icebergs-blue:            #3a66b6;
-$icebergs-blue-light:      #1199a7;
+$ento-blue:            #3a66b6;
+$ento-blue-light:      #1199a7;
 
-$icebergs-raw-light:       #a5bdb7;
-$icebergs-raw-dark:        #82959e;
-$icebergs-raw-green:       #9CBCB7;
+$ento-raw-light:       #a5bdb7;
+$ento-raw-dark:        #82959e;
+$ento-raw-green:       #9CBCB7;
 
-$icebergs-yellow:          #e2a62c;
-$icebergs-yellow:          #f5a710;
-$icebergs-red:             #d65761;
+$ento-yellow:          #e2a62c;
+$ento-yellow:          #f5a710;
+$ento-red:             #d65761;
 
 // Corporative defaults
-$icebergs-bg:              $icebergs-light;
-$icebergs-text:            $icebergs-dark;
-$icebergs-border:          $icebergs-raw-dark;
+$ento-bg:              $ento-light;
+$ento-text:            $ento-dark;
+$ento-border:          $ento-raw-dark;
 
 // Layout
-$layout-bg:                 $icebergs-bg;
-$layout-text:               $icebergs-text;
-$layout-app-bg:             $icebergs-dark;
+$layout-bg:                 $ento-bg;
+$layout-text:               $ento-text;
+$layout-app-bg:             $ento-dark;
 $layout-app-text:           $white;
 
 // Defaults
-$text-color:                $icebergs-text;
-$border-color:              $icebergs-border;
+$text-color:                $ento-text;
+$border-color:              $ento-border;
 
 // Dropdown
 $dropdown-bg:               $white;
-$dropdown-text:             $icebergs-dark;
-$dropdown-shadow-bg:        rgba($icebergs-light, 0.7);
-$dropdown-active-bg:        $icebergs-blue-light;
+$dropdown-text:             $ento-dark;
+$dropdown-shadow-bg:        rgba($ento-light, 0.7);
+$dropdown-active-bg:        $ento-blue-light;
 $dropdown-active-text:      $white;
 
 
