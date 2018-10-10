@@ -1,0 +1,26 @@
+{
+  "name": "pigmento-sminkon-utils",
+  "version": "0.0.1",
+  "description": "Pigmento Sminkon utils",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/articstudio/pigmento-sminkon-utils.git"
+  },
+  "keywords": [],
+  "author": [
+    {
+      "name": "Artic studio",
+      "email": "developers@articstudio.com"
+    }
+  ],
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/articstudio/pigmento-sminkon-utils",
+  "devDependencies": {
+    "fs": "0.0.1-security",
+    "mime": "^1.4.0",
+    "path": "^0.12.7""
+  },
+  "dependencies": {}
+}
