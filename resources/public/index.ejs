@@ -20,20 +20,16 @@
             var _ento = {
                 js: '',
                 css: '',
-                icon: '<%- htmlWebpackPlugin.options.ento.icon %>',
-                logo_author: '<%- htmlWebpackPlugin.options.ento.logo_author %>',
-                logo: '<%- htmlWebpackPlugin.options.ento.logo %>',
-                logo_horizontal: '<%- htmlWebpackPlugin.options.ento.logo_horizontal %>',
+                icon: '<%- htmlWebpackPlugin.options.ento.images.icon %>',
+                logo_author: '<%- htmlWebpackPlugin.options.ento.images.logo_author %>',
+                logo: '<%- htmlWebpackPlugin.options.ento.images.logo %>',
+                logo_horizontal: '<%- htmlWebpackPlugin.options.ento.images.logo_horizontal %>',
                 hash: '<%= hash %>',
                 app_url: '<%= process.env.APP_URL %>',
                 api_url: '<%= process.env.API_URL %>',
                 develop: <%= htmlWebpackPlugin.options.ento.develop %>,
                 version: '<%= htmlWebpackPlugin.options.ento.version %>',
                 gmaps_apikey: '<%= process.env.GMAPS_APIKEY %>',
-                pusher: {
-                    key: '<%= process.env.PUSHER_KEY %>',
-                    cluster: '<%= process.env.PUSHER_CLUSTER %>',
-                },
                 webview: false
             };
         </script>
