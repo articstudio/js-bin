@@ -1,8 +1,7 @@
 /* Basic loader */
-let load = require('./lib/loader');
+let load = require('pigmento-sminkon-utils').loader;
 let UserAgentParser = require('ua-parser-js');
 let outdatedBrowserRework = require('outdated-browser-rework');
-
 
 /* Loading */
 module.exports = (function () {
