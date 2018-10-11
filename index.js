@@ -2,14 +2,15 @@ module.exports = (function () {
     'use strict';
 
     let load = require('./load'),
+        path = require('path'),
         utils = require('pigmento-sminkon-utils'),
         clean = require('clean-webpack-plugin'),
         html = require('html-webpack-plugin'),
         dotenv = require('dotenv-webpack'),
         ExtractTextPlugin = require('extract-text-webpack-plugin'),
         CopyWebpackPlugin = require('copy-webpack-plugin'),
-        UglifyJsPlugin = require('uglifyjs-webpack-plugin'),
-        path = require('path');
+        TerserPlugin = require('terser-webpack-plugin'),
+        OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
     // Loading
     utils.config.addEntry(
@@ -64,8 +65,14 @@ module.exports = (function () {
 
 
     //Production plugins
-    if (true || utils.config.isProduction()) {
-        utils.config.setPlugin(new UglifyJsPlugin());
+    if (utils.config.isProduction()) {
+        utils.config.setPlugin(new TerserPlugin({
+            test: /\.js($|\?)/i,
+            parallel: 4,
+            extractComments: true,
+            cache: true
+        }));
+        utils.config.setPlugin(new OptimizeCSSAssetsPlugin({}));
     }
 
     let exports = {};
