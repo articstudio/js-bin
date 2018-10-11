@@ -93,7 +93,7 @@ module.exports = (function () {
             return {
                 hash: config.hash,
                 images: config.images,
-                develop: !this.isProduction(),
+                develop: !!(process.env.NODE_ENV !== 'production'),
                 version: config.version
             };
         }
