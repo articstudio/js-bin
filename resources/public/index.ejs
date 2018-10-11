@@ -18,7 +18,7 @@
         <!-- Ento -->
         <script type="text/javascript">
             var _ento = {
-                js: '',
+                js: '<%= process.env.APP_URL %>js/main.js',
                 css: '',
                 icon: '<%- htmlWebpackPlugin.options.ento.images.icon %>',
                 logo_author: '<%- htmlWebpackPlugin.options.ento.images.logo_author %>',
@@ -36,8 +36,8 @@
 
 
         <!-- Loading -->
-        <link rel="stylesheet" href="<%= process.env.APP_URL %>/css/loading.css?<%= hash %>">
-        <script type="text/javascript" src="<%= process.env.APP_URL %>/js/loading.js?<%= hash %>"></script>
+        <link rel="stylesheet" href="<%= process.env.APP_URL %>css/loading.css?<%= hash %>">
+        <script type="text/javascript" src="<%= process.env.APP_URL %>js/loading.js?<%= hash %>"></script>
 
     </head>
     <body id="top" data-ng-class="body.class">
