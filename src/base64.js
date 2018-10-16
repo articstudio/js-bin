@@ -1,11 +1,13 @@
-var fs = require('fs'),
-    path = require('path'),
-    mime = require('mime');
-
 module.exports = (function () {
     'use strict';
 
-    var exports = function (filename, options) {
+    // Required libraries
+    let fs = require('fs'),
+    path = require('path'),
+    mime = require('mime');
+
+    // Return exports
+    return function (filename, options) {
 
         var filepath,
             mtype,
@@ -31,9 +33,9 @@ module.exports = (function () {
             return filename;
         }
 
-        mtype = mime.lookup(filepath);
+        mtype = mime.getType(filepath);
 
-        if (mtype === 'application/octet-stream') {
+        if (!mtype || mtype === 'application/octet-stream') {
             console.log('img2base64 => Mimetype not supported: ' + mtype + ' / ' + filename);
             return filename;
         }
@@ -43,6 +45,4 @@ module.exports = (function () {
 
         return 'data:' + mtype + ';base64,' + simg64;
     };
-
-    return exports;
 })();

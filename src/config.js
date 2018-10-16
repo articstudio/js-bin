@@ -1,6 +1,7 @@
 module.exports = (function () {
     'use strict';
 
+    // Configuration
     let config = {
         version: null,
         hash: function () {
@@ -13,10 +14,41 @@ module.exports = (function () {
         plugins: [],
         images: [],
         rules: [],
-        template: null
+        template: null,
+        data: null,
+        root_dirname: null
     };
 
-    let exports = {
+    // Make assets objects
+    let makeAssetsObjects = function (assets) {
+        let i, a = [];
+        for (i in assets) {
+            a.push({
+                from: assets[i],
+                to: i,
+                toType: 'dir',
+                ignore: ['*.ejs']
+            });
+        }
+        return a;
+    };
+
+    // Return exports
+    return {
+        setRootDirname: function (value) {
+            config.root_dirname = value;
+        },
+        getRootDirname: function () {
+            return config.root_dirname;
+        },
+        //
+        setData: function (value) {
+            config.data = value;
+        },
+        getData: function () {
+            return config.data;
+        },
+        //
         setTemplate: function (value) {
             config.template = value;
         },
@@ -25,7 +57,7 @@ module.exports = (function () {
         },
         //
         setOutput: function (value) {
-            config.output = value
+            config.output = value;
         },
         getOutput: function () {
             return config.output;
@@ -60,6 +92,9 @@ module.exports = (function () {
         getAssets: function () {
             return config.assets;
         },
+        getAssetsObjects: function () {
+            return makeAssetsObjects(config.assets);
+        },
         //
         setAlias: function (key, value) {
             config.alias[key] = value;
@@ -79,13 +114,13 @@ module.exports = (function () {
         },
         //
         setPlugin: function (value) {
-            config.plugins.push(value)
+            config.plugins.push(value);
         },
         getPlugins: function () {
             return config.plugins;
         },
         //
-        isProduction: function(){
+        isProduction: function () {
             return !!(process.env.NODE_ENV === 'production');
         },
         //
@@ -93,11 +128,9 @@ module.exports = (function () {
             return {
                 hash: config.hash,
                 images: config.images,
-                develop: !!(process.env.NODE_ENV !== 'production'),
+                develop: !this.isProduction(),
                 version: config.version
             };
         }
     };
-
-    return exports;
 })();
