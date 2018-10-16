@@ -17,9 +17,7 @@
   ],
   "license": "UNLICENSED",
   "homepage": "https://github.com/articstudio/pigmento-sminkon-utils",
-  "devDependencies": {
-
-  },
+  "devDependencies": {},
   "dependencies": {
     "fs": "0.0.1-security",
     "mime": "^2.3.1",
