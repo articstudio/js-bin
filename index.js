@@ -1,6 +1,36 @@
 module.exports = (function () {
     'use strict';
 
+    let getVendorAlias = function (imports) {
+        let i, j, result = {};
+        for (i in imports) {
+            if (typeof imports[i] !== 'object' || !imports[i].name || !imports[i].alias) {
+                continue;
+            }
+            if (!Array.isArray(imports[i].alias)) {
+                imports[i].alias = [imports[i].alias];
+            }
+            for (j in imports[i].alias) {
+                result[imports[i].alias[j]] = imports[i].name;
+            }
+        }
+        return result;
+    };
+    let getVendorNames = function (imports) {
+        let i, result = [];
+        for (i in imports) {
+            if (typeof imports[i] !== 'object') {
+                result.push(imports[i]);
+                continue;
+            }
+            if (!imports[i].name) {
+                continue;
+            }
+            result.push(imports[i].name);
+        }
+        return result;
+    };
+
     return function (utils) {
         let path = require('path'),
                 provide = require('webpack').ProvidePlugin,
@@ -11,7 +41,7 @@ module.exports = (function () {
                 dependencies = utils.config.getData().dependencies,
                 files = utils.config.getData().config.webpack.files,
                 rootDir = utils.config.getRootDirname(),
-                i, j, name, pigmento, imports, angular_modules, injects = {}, vendors = [];
+                i, j, name, pigmento, imports, angular_modules, injects;
 
         // Configuration
         config(utils, manager);
@@ -41,36 +71,20 @@ module.exports = (function () {
         // Define angular modules
         angular_modules = manager.getAngularModules();
         utils.config.setPlugin(new define({
-            __ANGULAR_MODULES__:JSON.stringify(angular_modules)
+            __ANGULAR_MODULES__: JSON.stringify(angular_modules)
         }));
 
         // Inject imports
-        imports = manager.getImports();
-        for (i in imports) {
-            if (typeof imports[i] !== 'object') {
-                vendors.push(imports[i]);
-                continue;
-            }
-            if (!imports[i].name) {
-                continue;
-            }
-            vendors.push(imports[i].name);
-            if (!imports[i].alias) {
-                continue;
-            }
-            if (!Array.isArray(imports[i].alias)) {
-                imports[i].alias = [imports[i].alias];
-            }
-            for (j in imports[i].alias) {
-                injects[imports[i].alias[j]] = imports[i].name;
-            }
-        }
+        injects = getVendorAlias(manager.getImports());
         utils.config.setPlugin(new provide(injects));
 
         // Main
-        utils.config.addEntry('main', vendors.concat([
+        imports = getVendorNames(manager.getDependencies());
+        imports = imports.concat([
             path.resolve(__dirname, './resources/js/main.js'),
             path.resolve(__dirname, './resources/sass/main.scss')
-        ]));
+        ]);
+        imports = imports.concat(getVendorNames(manager.getScripts()));
+        utils.config.addEntry('main', [...new Set(imports)]);
     };
 })();

@@ -25,5 +25,7 @@
     "jquery-ui-dist": "^1.12.1",
     "lodash": "^4.17.11",
     "outdated-browser-rework": "^2.1.4",
-    "ua-parser-js": "^0.7.17"}
+    "ua-parser-js": "^0.7.17",
+    "jasny-bootstrap": "^3.1.3"
+  }
 }
