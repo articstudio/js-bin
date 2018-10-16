@@ -1,81 +1,76 @@
 module.exports = (function () {
     'use strict';
 
-    let load = require('./load'),
-        path = require('path'),
-        utils = require('pigmento-sminkon-utils'),
-        clean = require('clean-webpack-plugin'),
-        html = require('html-webpack-plugin'),
-        dotenv = require('dotenv-webpack'),
-        ExtractTextPlugin = require('extract-text-webpack-plugin'),
-        CopyWebpackPlugin = require('copy-webpack-plugin'),
-        TerserPlugin = require('terser-webpack-plugin'),
-        OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+    return function (utils) {
+        let path = require('path'),
+                provide = require('webpack').ProvidePlugin,
+                define = require('webpack').DefinePlugin,
+                config = require(path.resolve(__dirname, './src/config.js')),
+                inject = require(path.resolve(__dirname, './src/inject.js')),
+                manager = require(path.resolve(__dirname, './src/manager.js')),
+                dependencies = utils.config.getData().dependencies,
+                files = utils.config.getData().config.webpack.files,
+                rootDir = utils.config.getRootDirname(),
+                i, j, name, pigmento, imports, angular_modules, injects = {}, vendors = [];
 
-    // Loading
-    utils.config.addEntry(
-        'loading', [
-            path.resolve(__dirname, './resources/js/loading.js'),
-            path.resolve(__dirname, './resources/sass/loading.scss')
-        ]);
+        // Configuration
+        config(utils, manager);
 
-    // Main
-    utils.config.addEntry(
-        'main', [
-            path.resolve(__dirname, './resources/js/main.js'),
-        ]);
+        // Injection
+        inject(utils, manager);
 
-    // Template
-    utils.config.setTemplate(path.resolve(__dirname, './resources/public/index.ejs'));
+        // Require all pigmento packages
+        for (i in dependencies) {
+            name = i.split('-');
+            // Excepts "pigmento-sminkon-utils" &  "pigmento-sminkon-core"
+            if (name[0] !== 'pigmento' || i === 'pigmento-sminkon-utils' || i === 'pigmento-sminkon-core') {
+                continue;
+            }
+            pigmento = require(i);
+            if (typeof pigmento !== 'function') {
+                continue;
+            }
+            pigmento(utils, manager);
+        }
 
-    // Assets
-    utils.config.setAsset('images', path.resolve(__dirname, './resources/images'));
-    utils.config.setAsset('i18n', path.resolve(__dirname, './resources/i18n'));
-    utils.config.setAsset('', path.resolve(__dirname, './resources/public'));
+        // Require all project files
+        for (i in files) {
+            manager.addScript(path.resolve(rootDir, files[i]));
+        }
 
-    // Base64 images
-    utils.config.addImage('icon', utils.base64('./resources/images/icon.svg', {base: __dirname}));
-    utils.config.addImage('logo_author', utils.base64('./resources/images/author.svg', {base: __dirname}));
-    utils.config.addImage('logo', utils.base64('./resources/images/logo.svg', {base: __dirname}));
-    utils.config.addImage('logo_horizontal', utils.base64('./resources/images/logo_horizontal.svg', {base: __dirname}));
-
-    //Rules
-    utils.config.setRule({
-        test: /\.(sass|scss)$/,
-        loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
-    });
-
-    //Plugins - Base
-    utils.config.setPlugin(new dotenv({}));
-    utils.config.setPlugin(new clean([
-        path.resolve(__dirname, utils.config.getOutput())
-    ], {}));
-    utils.config.setPlugin(new html({
-        ento: utils.config.getConfig(),
-        template: utils.config.getTemplate(),
-        inject: false,
-        hash: true,
-        minify: {}
-    }));
-    utils.config.setPlugin(new ExtractTextPlugin({ // define where to save the file
-        filename: './css/[name].css',
-        allChunks: true,
-    }));
-    utils.config.setPlugin(new CopyWebpackPlugin(load.assets()));
-
-
-    //Production plugins
-    if (utils.config.isProduction()) {
-        utils.config.setPlugin(new TerserPlugin({
-            test: /\.js($|\?)/i,
-            parallel: 4,
-            extractComments: true,
-            cache: true
+        // Define angular modules
+        angular_modules = manager.getAngularModules();
+        utils.config.setPlugin(new define({
+            __ANGULAR_MODULES__:JSON.stringify(angular_modules)
         }));
-        utils.config.setPlugin(new OptimizeCSSAssetsPlugin({}));
-    }
 
-    let exports = {};
+        // Inject imports
+        imports = manager.getImports();
+        for (i in imports) {
+            if (typeof imports[i] !== 'object') {
+                vendors.push(imports[i]);
+                continue;
+            }
+            if (!imports[i].name) {
+                continue;
+            }
+            vendors.push(imports[i].name);
+            if (!imports[i].alias) {
+                continue;
+            }
+            if (!Array.isArray(imports[i].alias)) {
+                imports[i].alias = [imports[i].alias];
+            }
+            for (j in imports[i].alias) {
+                injects[imports[i].alias[j]] = imports[i].name;
+            }
+        }
+        utils.config.setPlugin(new provide(injects));
 
-    return exports;
+        // Main
+        utils.config.addEntry('main', vendors.concat([
+            path.resolve(__dirname, './resources/js/main.js'),
+            path.resolve(__dirname, './resources/sass/main.scss')
+        ]));
+    };
 })();

@@ -18,8 +18,8 @@
         <!-- Ento -->
         <script type="text/javascript">
             var _ento = {
-                js: '<%= process.env.APP_URL %>js/main.js',
-                css: '',
+                js: ['<%= process.env.APP_URL %>js/main.js?<%= hash %>'],
+                css: ['<%= process.env.APP_URL %>css/main.css?<%= hash %>'],
                 icon: '<%- htmlWebpackPlugin.options.ento.images.icon %>',
                 logo_author: '<%- htmlWebpackPlugin.options.ento.images.logo_author %>',
                 logo: '<%- htmlWebpackPlugin.options.ento.images.logo %>',

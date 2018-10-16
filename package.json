@@ -17,9 +17,13 @@
   ],
   "license": "UNLICENSED",
   "homepage": "https://github.com/articstudio/pigmento-sminkon-core",
-  "devDependencies": {
-    "ua-parser-js": "^0.7.17",
-    "outdated-browser-rework": "^2.1.4"
-  },
-  "dependencies": {}
+  "devDependencies": {},
+  "dependencies": {
+    "angular": "^1.6.6",
+    "bootstrap-sass": "^3.3.7",
+    "jquery": "^3.3.1",
+    "jquery-ui-dist": "^1.12.1",
+    "lodash": "^4.17.11",
+    "outdated-browser-rework": "^2.1.4",
+    "ua-parser-js": "^0.7.17"}
 }

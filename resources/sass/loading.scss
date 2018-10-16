@@ -1,9 +1,8 @@
-
 /* Variables */
 @import 'bootstrap';
 
 /* Loading bar */
-@import "~outdated-browser-rework/style.scss";
+//@import "~outdated-browser-rework/style.scss";
 
 /* Loading */
 body, html, main {
@@ -83,9 +82,9 @@ html {
 }
 
 @keyframes ento-loading-animation {
-    0%, 40%, 100% { 
+    0%, 40%, 100% {
         transform: scaleY(0.4);
-    }  20% { 
+    }  20% {
         transform: scaleY(1.0);
     }
 }
