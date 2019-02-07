@@ -1,14 +1,12 @@
 
+let constructor = function (app) {
 
+    console.log("PULL SUBTREE");
+    return {
+        execute: function () {
 
-class Pull {
-    constructor() {
-        console.log("Pull SUBTREE");
+        }
     }
+};
 
-    execute() {
-
-    }
-}
-
-module.exports = Pull;
+module.exports = constructor;

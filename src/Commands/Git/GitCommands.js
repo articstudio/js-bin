@@ -1,34 +1,61 @@
 let AbstractMenuCommand = require('../../AbstractMenuCommand');
-let FactoryGit = require('./FactoryGit');
-const inquirer = require('inquirer');
+let Add = require('./Subtree/Add');
+let Push = require('./Subtree/Push');
+let Pull = require('./Subtree/Pull');
+let Remove = require('./Subtree/Remove');
+let Check = require('./Subtree/Check');
 
-class GitCommands extends AbstractMenuCommand{
-    constructor() {
-        const menu_options = [
-            {name: "Add", value: "add"},
-            {name: "Push", value: "push"},
-            {name: "Pull", value: "pull"},
-            {name: "Remove", value: "remove"},
-            {name: "Check", value: "check"},
-            new inquirer.Separator(),
-            {name: "Exit", value: "exit"}
-        ];
+let constructor = function (config) {
 
-        const questions = [
-            {type: 'list', name: 'menu', message: 'Git Subtrees - JS-BIN', choices: menu_options}
-        ];
-        super(questions);
-    }
-}
+    return AbstractMenuCommand({
+        name: 'menu',
+        message: 'Git Subtrees - JS-BIN',
+        choices: [
+            {
+                name: "Add",
+                value: "add",
+                callback: function () {
+                    return new Add();
+                }
+            },
+            {
+                name: "Push",
+                value: "push",
+                callback: function () {
+                    return new Push();
+                }
+            },
+            {
+                name: "Pull",
+                value: "pull",
+                callback: function () {
+                    return new Pull();
+                }
+            },
+            {
+                name: "Remove",
+                value: "remove",
+                callback: function () {
+                    return new Remove();
+                }
+            },
+            {
+                name: "Check",
+                value: "check",
+                callback: function () {
+                    return new Check();
+                }
+            }
+        ]
+    });
+};
 
-module.exports = function () {
-    return new GitCommands().execute()
-        .then(function (option_menu) {
-            let factoryGit = new FactoryGit();
-            let option = factoryGit.createMenu(option_menu);
-            if(isNaN(option))
-                return -1;
 
-            option.execute();
+module.exports = function (config) {
+    return constructor(config)
+        .prepare()
+        .execute()
+        .then(function (callback) {
+            return callback ? callback() : -1;
         });
 };

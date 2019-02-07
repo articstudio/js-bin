@@ -1,14 +1,15 @@
+const app = require('../../../Application');
 
 
+let constructor = function () {
 
-class Add {
-    constructor() {
-        console.log("ADD SUBTREE");
+    console.log("ADD SUBTREE");
+    console.log(app.getPackage());
+    return {
+        execute: function () {
+            
+        }
     }
+};
 
-    execute() {
-
-    }
-}
-
-module.exports = Add;
+module.exports = constructor;

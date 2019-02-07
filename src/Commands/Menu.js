@@ -1,32 +1,51 @@
 let AbstractMenuCommand = require('../AbstractMenuCommand');
-let FactoryOptions = require('../FactoryOptions');
-const inquirer = require('inquirer');
+const GitCommands = require('./Git/GitCommands');
+const JSCommands = require('./Js/JSCommands');
+const PackageCommands = require('./Package/PackageCommands');
 
-class Menu extends AbstractMenuCommand {
+let constructor = function (config) {
 
-    constructor() {
+    return AbstractMenuCommand({
+        name: 'menu',
+        message: 'Select one to start',
+        choices: [
+            {
+                name: "Git",
+                value: "git",
+                callback: function () {
+                    return new GitCommands();
+                }
+            },
+            {
+                name: "JS",
+                value: "js",
+                callback: function () {
+                    return new JSCommands();
+                }
+            },
+            {
+                name: "Package json",
+                value: "package",
+                callback: function () {
+                    return new PackageCommands();
+                }
+            }
+        ]
+    });
 
-        const menu_options = [
-            {name: "Git", value: "git"},
-            {name: "JS", value: "js"},
-            {name: "Package json", value: "package"},
-            new inquirer.Separator(),
-            {name: "Exit", value: "exit"}
-        ];
-
-        const questions = [
-            {type: 'list', name: 'menu', message: 'Select one to start', choices: menu_options}
-        ];
-        super(questions);
+    function addCommand() {
+        return "A";
     }
+};
 
-}
 
+module.exports = function (config) {
 
-module.exports = function () {
-    return new Menu().execute()
-        .then(function (option_menu) {
-            let factory = new FactoryOptions();
-            factory.createMenu(option_menu);
+    let command = {name: 'git', alias: 't', description: '', action: this};
+    return constructor(config)
+        .prepare()
+        .execute()
+        .then(function (callback) {
+            return callback ? callback() : -1;
         });
 };

@@ -1,23 +1,37 @@
 'use strict';
 
 const inquirer = require('inquirer');
+const _ = require('lodash');
 
-class AbstractMenuCommand {
-
-    constructor(ask) {
-        this.question = ask;
+let constructor = function(config){
+    return {
+        config: Object.assign({
+            type: 'list',
+            message: 'Title',
+            name: _.random(0, 999999),
+            choices: []
+        }, config),
+        prepare: function(){
+            this.config.choices.push(new inquirer.Separator());
+            this.config.choices.push({name: "Exit", value: "exit"});
+            return this;
+        },
+        callChoiceCallback: function(choiceValue) {
+            let choice = _.find(this.config.choices, {value:choiceValue});
+            return (choice && choice.callback) ? choice.callback : null;
+        },
+        execute: function() {
+            let _self = this;
+            return inquirer
+                .prompt(this.config)
+                .then(function (choice) {
+                    if (choice.menu === 'exit') {
+                        return false;
+                    }
+                    return _self.callChoiceCallback(choice.menu);
+                });
+        }
     }
+};
 
-    execute() {
-        return inquirer
-            .prompt(this.question)
-            .then(function (answer) {
-                if (answer.menu === 'exit') {
-                    return -1;
-                }
-                return answer.menu;
-            });
-    }
-}
-
-module.exports = AbstractMenuCommand;
+module.exports = constructor;

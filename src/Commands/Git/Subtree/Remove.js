@@ -1,14 +1,12 @@
 
+let constructor = function (app) {
 
+    console.log("REMOVE SUBTREE");
+    return {
+        execute: function () {
 
-class Remove {
-    constructor() {
-        console.log("Remove SUBTREE");
+        }
     }
+};
 
-    execute() {
-
-    }
-}
-
-module.exports = Remove;
+module.exports = constructor;
