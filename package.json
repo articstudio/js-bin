@@ -2,7 +2,7 @@
   "name": "js-bin",
   "version": "1.0.0",
   "description": "",
-  "main": "Application.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,9 +22,10 @@
     "colors": "^1.3.3",
     "commander": "^2.19.0",
     "inquirer": "^6.2.2",
+    "lodash": "^4.17.11",
     "pad": "^2.2.2"
   },
   "bin": {
-    "jsbin": "./bin/index.js"
+    "jsbin": "bin/jsbin"
   }
 }
