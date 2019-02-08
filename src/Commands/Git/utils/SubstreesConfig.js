@@ -1,11 +1,10 @@
+const app = require('../../../Application');
 
+module.exports = {
+    getSubtrees: function () {
+        let package_json = app.getPackage();
+        let config = package_json.hasOwnProperty('data') && package_json.data.hasOwnProperty('config') ? package_json.data.config : [];
 
-let constructor = function (app) {
-    return {
-        getSubtrees: function () {
-
-        }
-    }
+        return config.hasOwnProperty('subtree') ? config.subtree : [];
+    },
 };
-
-module.exports = constructor;
