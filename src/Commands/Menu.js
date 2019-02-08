@@ -32,16 +32,11 @@ let constructor = function (config) {
             }
         ]
     });
-
-    function addCommand() {
-        return "A";
-    }
 };
 
 
 module.exports = function (config) {
 
-    let command = {name: 'git', alias: 't', description: '', action: this};
     return constructor(config)
         .prepare()
         .execute()

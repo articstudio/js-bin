@@ -9,7 +9,8 @@ let constructor = function(config){
             type: 'list',
             message: 'Title',
             name: _.random(0, 999999),
-            choices: []
+            choices: [],
+            pageSize: 10
         }, config),
         prepare: function(){
             this.config.choices.push(new inquirer.Separator());
