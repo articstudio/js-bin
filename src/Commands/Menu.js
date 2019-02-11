@@ -1,23 +1,46 @@
-const inquirer = require('inquirer');
-const colors = require('colors');
-const pad = require('pad');
+let AbstractMenuCommand = require('../AbstractMenuCommand');
+const GitCommands = require('./Git/GitCommands');
+const JSCommands = require('./Js/JSCommands');
+const PackageCommands = require('./Package/PackageCommands');
 
-const menu_options = [
-    {name: "Git", value: "git"},
-    {name: "JS", value: "js"},
-    {name: "Package json", value:"package"},
-    new inquirer.Separator(),
-    {name: "Exit", value: "exit"}
-];
+let constructor = function (config) {
 
-const questions = [
-    {type: 'list', name: 'menu', message: 'Select one to start', choices: menu_options}
-];
+    return AbstractMenuCommand({
+        name: 'menu',
+        message: 'Select one to start',
+        choices: [
+            {
+                name: "Git",
+                value: "git",
+                callback: function () {
+                    return new GitCommands();
+                }
+            },
+            {
+                name: "JS",
+                value: "js",
+                callback: function () {
+                    return new JSCommands();
+                }
+            },
+            {
+                name: "Package json",
+                value: "package",
+                callback: function () {
+                    return new PackageCommands();
+                }
+            }
+        ]
+    });
+};
 
-module.exports = function () {
-    inquirer
-        .prompt(questions)
-        .then(function (answer) {
-            console.log(pad(colors.grey('User has selected: '), 20), answer.menu);
+
+module.exports = function (config) {
+
+    return constructor(config)
+        .prepare()
+        .execute()
+        .then(function (callback) {
+            return callback ? callback() : -1;
         });
 };
