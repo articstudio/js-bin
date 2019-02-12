@@ -1,15 +1,11 @@
 const inquirer = require('inquirer');
 
 module.exports = {
-    ask: function (message) {
+    ask: function (questions) {
         return inquirer
-            .prompt({
-                type: 'input',
-                name: 'question',
-                message: message
-            })
-            .then(function (answer) {
-                return answer.question;
+            .prompt(questions)
+            .then(answers => {
+                return answers;
             });
     }
 };
