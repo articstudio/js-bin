@@ -79,7 +79,6 @@ let constructor = function () {
             AbstractCommand.ask(question)
                 .then(answer => {
                     let commited = SubtreesConfig.commitChanges(answer.commit, '-a');
-                    console.log(commited);
                     if (!commited) {
                         console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url +
                             ' because have local changes to commit.');
