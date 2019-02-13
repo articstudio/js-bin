@@ -16,7 +16,7 @@ let constructor = function () {
             let package_name, repository_url, store;
             selectPackageMenu("Subtree packages", menu_options)
                 .then(function (user_choice) {
-                    if(!user_choice)
+                    if (!user_choice)
                         process.exit(1);
 
                     package_name = user_choice;
@@ -79,7 +79,7 @@ let constructor = function () {
             };
             question_commit = AbstractCommand.ask(question)
                 .then(answer => {
-                    let commited = SubtreesConfig.commitChanges(answer.commit, './bin/jsbin');
+                    let commited = SubtreesConfig.commitChanges(answer.commit, '-a');
                     if (!commited) {
                         console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url +
                             ' because have local changes to commit.');
@@ -88,24 +88,22 @@ let constructor = function () {
                 });
         }
 
-        return question_commit.then(answer => {
-            if (SubtreesConfig.subtreeExists(package_name)) {
-                console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url
-                    + '. It already exists');
-                process.exit(1);
-            }
+        if (SubtreesConfig.subtreeExists(package_name)) {
+            console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url
+                + '. It already exists');
+            process.exit(1);
+        }
 
-            let cmd_remote_add = 'git remote add ' + package_name + ' ' + repository_url;
-            let cmd_add_subtree = 'git subtree add --prefix=' + package_name + '/ ' + repository_url +' master';
-            let code, stdout, stderr;
-            AbstractCommand.callShell(cmd_remote_add);
-            [code, stdout, stderr] = AbstractCommand.callShell(cmd_add_subtree);
-            if(code === 1) {
-                console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url + '');
-                process.exit(1);
-            }
-            return stdout !== '' ? stdout : stderr;
-        });
+        let cmd_remote_add = 'git remote add ' + package_name + ' ' + repository_url;
+        let cmd_add_subtree = 'git subtree add --prefix=' + package_name + '/ ' + repository_url + ' master';
+        let code, stdout, stderr;
+        AbstractCommand.callShell(cmd_remote_add);
+        [code, stdout, stderr] = AbstractCommand.callShell(cmd_add_subtree);
+        if (code === 1) {
+            console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url + '');
+            process.exit(1);
+        }
+        return stdout !== '' ? stdout : stderr;
 
     }
 
