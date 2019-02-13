@@ -1,5 +1,6 @@
 const app = require('../../../Application');
 const shell = require('shelljs');
+const AbstractCommand = require('../../../AbstractCommand');
 
 module.exports = {
     getSubtrees: function () {
@@ -18,18 +19,12 @@ module.exports = {
         });
     },
     getLocalChanges: function () {
-        return shell.exec('git diff --exit-code', {silent:true}).code !== 0;
+        return AbstractCommand.callShell('git diff --exit-code').code !== 0;
     },
     commitChanges: function (message, files) {
-        return shell.exec('git commit -m "' + message + '" ' + files, {silent:true}).code === 0;
+        return AbstractCommand.callShell('git commit -m "' + message + '" ' + files).code === 0;
     },
     subtreeExists: function (package_name) {
-        return exec('find . ', ['-type d', '-wholename "./' + package_name + '"'], (error, stdout, stderr) => {
-            if (error) {
-                console.error(`exec error: ${error}`);
-                return;
-            }
-            return stdout !== '';
-        });
+        return AbstractCommand.callShell('find . -type d -wholename "./' + package_name + '"').stdout !== '' ;
     }
 };
