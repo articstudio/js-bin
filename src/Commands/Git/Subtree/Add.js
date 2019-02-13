@@ -16,6 +16,8 @@ let constructor = function () {
             let package_name, repository_url, store;
             selectPackageMenu("Subtree packages", menu_options)
                 .then(function (user_choice) {
+                    if(!user_choice)
+                        process.exit(1);
 
                     package_name = user_choice;
                     repository_url = packages.find(element => {
@@ -26,13 +28,12 @@ let constructor = function () {
                     if (user_choice === 'new') {
                         showNewPackageQuestions().then(answers => {
                             [package_name, repository_url, store] = answers;
-                            if(store) {
+                            if (store) {
                                 WritePackageJson.addSubtreeToPackageJson({[package_name]: repository_url});
                             }
                         });
                     }
                     addGitSubtree(package_name, repository_url);
-
 
                 });
 
@@ -68,7 +69,30 @@ let constructor = function () {
     }
 
     function addGitSubtree(package_name, repository_url) {
-        SubtreesConfig.getLocalChanges();
+        if (SubtreesConfig.getLocalChanges()) {
+            let question = {
+                type: 'input',
+                name: 'commit',
+                message: "You need to commit changes before add a subtree. " + "\n" + "Commit message: \n",
+                default: "WIP"
+            };
+            AbstractCommand.ask(question)
+                .then(answer => {
+                    let commited = SubtreesConfig.commitChanges(answer.commit, '-a');
+                    console.log(commited);
+                    if (!commited) {
+                        console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url +
+                            ' because have local changes to commit.');
+                    }
+                });
+        }
+
+
+        // if (SubtreesConfig.subtreeExists(package_name)) {
+        //     console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url
+        //         + '. It already exists');
+        // }
+
     }
 
     function selectPackageMenu(title, menu_options) {

@@ -1,5 +1,5 @@
 const app = require('../../../Application');
-const { exec } = require('child_process');
+const shell = require('shelljs');
 
 module.exports = {
     getSubtrees: function () {
@@ -18,15 +18,18 @@ module.exports = {
         });
     },
     getLocalChanges: function () {
-        exec('git diff', ['--exit-code'], (error, stdout, stderr) => {
+        return shell.exec('git diff --exit-code', {silent:true}).code !== 0;
+    },
+    commitChanges: function (message, files) {
+        return shell.exec('git commit -m "' + message + '" ' + files, {silent:true}).code;
+    },
+    subtreeExists: function (package_name) {
+        return exec('find . ', ['-type d', '-wholename "./' + package_name + '"'], (error, stdout, stderr) => {
             if (error) {
                 console.error(`exec error: ${error}`);
                 return;
             }
-            console.log(`stdout: ${stdout}`);
+            return stdout !== '';
         });
-    },
-    commitChanges: function (message, files) {
-
     }
 };
