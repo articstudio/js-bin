@@ -21,8 +21,7 @@ module.exports = {
         return shell.exec('git diff --exit-code', {silent:true}).code !== 0;
     },
     commitChanges: function (message, files) {
-        console.log("!!");
-        return shell.exec('git commit -m "' + message + '" ' + files, {silent:true}).code !== 0;
+        return shell.exec('git commit -m "' + message + '" ' + files, {silent:true}).code === 0;
     },
     subtreeExists: function (package_name) {
         return exec('find . ', ['-type d', '-wholename "./' + package_name + '"'], (error, stdout, stderr) => {
