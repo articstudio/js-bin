@@ -69,23 +69,27 @@ let constructor = function () {
     }
 
     function addGitSubtree(package_name, repository_url) {
-        if (SubtreesConfig.getLocalChanges()) {
-            let question = {
-                type: 'input',
-                name: 'commit',
-                message: "You need to commit changes before add a subtree. " + "\n" + "Commit message: \n",
-                default: "WIP"
-            };
-            AbstractCommand.ask(question)
-                .then(answer => {
-                    let commited = SubtreesConfig.commitChanges(answer.commit, '-a');
-                    console.log(commited);
-                    if (!commited) {
-                        console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url +
-                            ' because have local changes to commit.');
-                    }
-                });
-        }
+        let commited = SubtreesConfig.commitChanges("WIP", '-a');
+        console.log(commited);
+
+
+        // if (SubtreesConfig.getLocalChanges()) {
+        //     let question = {
+        //         type: 'input',
+        //         name: 'commit',
+        //         message: "You need to commit changes before add a subtree. " + "\n" + "Commit message: \n",
+        //         default: "WIP"
+        //     };
+        //     AbstractCommand.ask(question)
+        //         .then(answer => {
+        //             let commited = SubtreesConfig.commitChanges(answer.commit, '-a');
+        //             console.log(commited);
+        //             if (!commited) {
+        //                 console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url +
+        //                     ' because have local changes to commit.');
+        //             }
+        //         });
+        // }
 
 
         // if (SubtreesConfig.subtreeExists(package_name)) {
