@@ -66,7 +66,7 @@ let constructor = function () {
             not_found: []
         };
 
-        for(let i = 0;i < repositories.length; i++) {
+        for (let i = 0; i < repositories.length; i++) {
             let repo = repositories[i];
             if (packages_names.length <= 0 || packages_names.indexOf(repo.name) >= 0) {
                 if (!SubtreesConfig.subtreeExists(repo.name)) {
@@ -82,9 +82,9 @@ let constructor = function () {
                 cmd = 'rm -r ' + repo.name + '/';
                 AbstractCommand.callShell(cmd);
                 cmd = 'git commit -m "Removing ' + repo.name + ' subtree"';
-                let {exit_code, output, error} = AbstractCommand.callShell(cmd);
-                console.log(exit_code);
-                exit_code === 0 ? result.done.push(repo) : result.error.push(repo);
+                let {code, stdout, stderr} = AbstractCommand.callShell(cmd);
+                console.log(code);
+                code === 0 ? result.done.push(repo) : result.error.push(repo);
                 continue;
 
             }
