@@ -29,7 +29,8 @@
   "config": {
     "subtree": {
       "Pigmento/sminkon-utils": "git@github.com:articstudio/pigmento-sminkon-utils.git",
-      "Pigmento/sminkon-core": "git@github.com:articstudio/pigmento-sminkon-core.git"
+      "Pigmento/sminkon-core": "git@github.com:articstudio/pigmento-sminkon-core.git",
+      "Articstudio/git-test": "https://github.com/articstudio/git-test.git"
     }
   },
   "bin": {

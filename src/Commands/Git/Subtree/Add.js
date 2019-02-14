@@ -33,9 +33,9 @@ let constructor = function () {
                             }
                         });
                     }
-                    let ouptut = addGitSubtree(package_name, repository_url);
-                    console.log(ouptut);
-
+                    addGitSubtree(package_name, repository_url).then(message => {
+                        console.log(message);
+                    })
                 });
 
         }
@@ -70,9 +70,6 @@ let constructor = function () {
     }
 
     async function addGitSubtree(package_name, repository_url) {
-        // let question_commit = new Promise((resolve, reject) => {
-        //     resolve(true);
-        // });
 
         await SubtreesConfig.commitPreviousChanges(package_name, repository_url);
         console.log('aaaaaa');

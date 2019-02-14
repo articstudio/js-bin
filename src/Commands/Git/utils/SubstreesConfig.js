@@ -27,8 +27,7 @@ module.exports = {
     subtreeExists: function (package_name) {
         return AbstractCommand.callShell('find . -type d -wholename "./' + package_name + '"').stdout !== '' ;
     },
-    commitPreviousChanges: async function (package_name, repository_url)
-    {
+    commitPreviousChanges: function (package_name, repository_url) {
         if (this.getLocalChanges() && !this.subtreeExists(package_name)) {
             let question = {
                 type: 'input',
