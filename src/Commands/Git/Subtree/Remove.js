@@ -68,7 +68,6 @@ let constructor = function () {
 
         for(let i = 0;i < repositories.length; i++) {
             let repo = repositories[i];
-            console.log(packages_names);
             if (packages_names.length <= 0 || packages_names.indexOf(repo.name) >= 0) {
                 if (!SubtreesConfig.subtreeExists(repo.name)) {
                     result.not_found.push(repo);
