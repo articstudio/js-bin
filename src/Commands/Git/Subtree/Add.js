@@ -35,7 +35,7 @@ let constructor = function () {
                     }
                     await addGitSubtree(package_name, repository_url).then(message => {
                         console.log(message);
-                    })
+                    });
                 });
 
         }
