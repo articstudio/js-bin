@@ -3,6 +3,11 @@ const AbstractCommand = require('../../../AbstractCommand');
 const colors = require('colors');
 const pad = require('pad');
 
+
+colors.setTheme({
+    warn: 'yellow'
+});
+
 module.exports = {
     getSubtrees: function () {
         let package_json = app.getPackage();
@@ -26,7 +31,7 @@ module.exports = {
         return AbstractCommand.callShell('git commit -m "' + message + '" ' + files).code === 0;
     },
     subtreeExists: function (package_name) {
-        return AbstractCommand.callShell('find . -type d -wholename "./' + package_name + '"').stdout !== '' ;
+        return AbstractCommand.callShell('find . -type d -wholename "./' + package_name + '"').stdout !== '';
     },
     commitPreviousChanges: function (package_name, repository_url) {
         if (this.getLocalChanges() && !this.subtreeExists(package_name)) {
@@ -55,20 +60,20 @@ module.exports = {
         console.log('------------------'.warn);
 
         console.log('Skipped packages: '.warn);
-        result.skipped.forEach(function (name) {
-            console.log('    - ' + name );
+        result.skipped.forEach(function (repo) {
+            console.log('    - ' + repo.name);
         });
         console.log('Done packages: '.warn);
-        result.done.forEach(function (name) {
-            console.log('    - ' + name );
+        result.done.forEach(function (repo) {
+            console.log('    - ' + repo.name);
         });
         console.log('Error packages: '.warn);
-        result.error.forEach(function (name) {
-            console.log('    - ' + name );
+        result.error.forEach(function (repo) {
+            console.log('    - ' + repo.name);
         });
         console.log('Not found packages: '.warn);
-        result.not_found.forEach(function (name) {
-            console.log('    - ' + name );
+        result.not_found.forEach(function (repo) {
+            console.log('    - ' + repo.name);
         });
 
         console.log("");

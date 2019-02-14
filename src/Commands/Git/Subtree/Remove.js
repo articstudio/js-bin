@@ -26,9 +26,8 @@ let constructor = function () {
                         package_names.push(subtree.name);
                     }) : package_names.push(user_choice);
 
-                    console.log(package_names);
                     result = removeDirAndRemoteSubtree(repositories, package_names);
-                    store = await showNewPackageQuestions();
+                    //store = await showNewPackageQuestions();
 
                     if (store) {
                         WritePackageJson.removeSubtreeToComposer(package_names);
@@ -49,7 +48,7 @@ let constructor = function () {
             let question = {
                 type: 'confirm',
                 name: 'store',
-                message: "Remove this package/repository of the Composer config?",
+                message: "Remove this package/repository of the Package.json config?",
                 default: force_store
             };
             force_store = await AbstractCommand.ask(question);
@@ -67,26 +66,31 @@ let constructor = function () {
             not_found: []
         };
 
-        repositories.forEach(function (repo, index) {
-            if (packages_names.length <= 0 || packages_names.indexOf(repo) >= 0) {
-                if (!SubtreesConfig.subtreeExists(repo)) {
+        for(let i = 0;i < repositories.length; i++) {
+            let repo = repositories[i];
+            console.log(packages_names);
+            if (packages_names.length <= 0 || packages_names.indexOf(repo.name) >= 0) {
+                if (!SubtreesConfig.subtreeExists(repo.name)) {
                     result.not_found.push(repo);
-                    repositories.splice(index, 1);
-                } else {
-                    let cmd = 'git remote rm ' + repo;
-                    AbstractCommand.callShell(cmd);
-                    cmd = 'git rm -r ' + repo + '/';
-                    AbstractCommand.callShell(cmd);
-                    cmd = 'rm -r ' + repo + '/';
-                    AbstractCommand.callShell(cmd);
-                    cmd = 'git commit -m "Removing ' + repo + ' subtree"';
-                    let [exit_code, output, error] = AbstractCommand.callShell(cmd);
-                    exit_code === 0 ? result.done.push(repo) : result.error.push(repo);
+                    repositories.splice(i, 1);
+                    i--;
+                    continue;
                 }
-            } else {
-                result.skipped.push(repo);
+                let cmd = 'git remote rm ' + repo.name;
+                AbstractCommand.callShell(cmd);
+                cmd = 'git rm -r ' + repo.name + '/';
+                AbstractCommand.callShell(cmd);
+                cmd = 'rm -r ' + repo.name + '/';
+                AbstractCommand.callShell(cmd);
+                cmd = 'git commit -m "Removing ' + repo.name + ' subtree"';
+                let [exit_code, output, error] = AbstractCommand.callShell(cmd);
+                exit_code === 0 ? result.done.push(repo) : result.error.push(repo);
+                continue;
+
             }
-        });
+            result.skipped.push(repo);
+
+        }
 
         return result;
     }
