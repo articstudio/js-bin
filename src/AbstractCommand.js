@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const shell = require('shelljs');
+const AbstractMenuCommand = require('./AbstractMenuCommand');
 const App = require('./Application');
 
 module.exports = {
@@ -21,5 +22,14 @@ module.exports = {
             stderr: process.stderr
         };
 
+    },
+    selectPackageMenu: function (title, menu_options) {
+        return AbstractMenuCommand({
+            name: 'menu',
+            message: title,
+            choices: menu_options
+        })
+            .prepare()
+            .execute()
     }
 };

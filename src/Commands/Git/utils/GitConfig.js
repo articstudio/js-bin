@@ -1,5 +1,7 @@
 const app = require('../../../Application');
 const AbstractCommand = require('../../../AbstractCommand');
+const colors = require('colors');
+const pad = require('pad');
 
 module.exports = {
     getSubtrees: function () {
@@ -46,5 +48,29 @@ module.exports = {
                 });
         }
         return Promise.resolve(true);
+    },
+    showResume: function (result) {
+
+        console.log('RESUME: '.warn);
+        console.log('------------------'.warn);
+
+        console.log('Skipped packages: '.warn);
+        result.skipped.forEach(function (name) {
+            console.log('    - ' + name );
+        });
+        console.log('Done packages: '.warn);
+        result.done.forEach(function (name) {
+            console.log('    - ' + name );
+        });
+        console.log('Error packages: '.warn);
+        result.error.forEach(function (name) {
+            console.log('    - ' + name );
+        });
+        console.log('Not found packages: '.warn);
+        result.not_found.forEach(function (name) {
+            console.log('    - ' + name );
+        });
+
+        console.log("");
     }
 };

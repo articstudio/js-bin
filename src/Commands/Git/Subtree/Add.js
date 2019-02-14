@@ -1,7 +1,6 @@
-let SubtreesConfig = require('../utils/GitConfig');
-let AbstractCommand = require('../../../AbstractCommand');
-let WritePackageJson = require('../../../Concerns/WritePackageJson');
-let AbstractMenuCommand = require('../../../AbstractMenuCommand');
+const SubtreesConfig = require('../utils/GitConfig');
+const AbstractCommand = require('../../../AbstractCommand');
+const WritePackageJson = require('../../../Concerns/WritePackageJson');
 
 let constructor = function () {
 
@@ -14,7 +13,7 @@ let constructor = function () {
             }
             ]);
             let package_name, repository_url, store;
-            selectPackageMenu("Subtree packages", menu_options)
+            AbstractCommand.selectPackageMenu("Subtree packages", menu_options)
                 .then(async function (user_choice) {
                     if (!user_choice)
                         process.exit(1);
@@ -91,15 +90,6 @@ let constructor = function () {
 
     }
 
-    function selectPackageMenu(title, menu_options) {
-        return AbstractMenuCommand({
-            name: 'menu',
-            message: title,
-            choices: menu_options
-        })
-            .prepare()
-            .execute()
-    }
 };
 
 module.exports = constructor;

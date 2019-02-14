@@ -15,6 +15,9 @@ module.exports = {
 
         WritePackageJson(package_json_data, package_json_file);
     },
+    removeSubtreeToComposer: function (itemsToRemove) {
+        
+    }
 };
 
 function WritePackageJson(config, package_file) {
