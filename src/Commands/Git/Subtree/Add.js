@@ -33,7 +33,8 @@ let constructor = function () {
                             }
                         });
                     }
-                    addGitSubtree(package_name, repository_url);
+                    let ouptut = addGitSubtree(package_name, repository_url);
+                    console.log(ouptut);
 
                 });
 
@@ -90,27 +91,24 @@ let constructor = function () {
                     return commited;
                 });
         }
+        return question_commit.then(a => {
+            if (SubtreesConfig.subtreeExists(package_name)) {
+                console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url
+                    + '. It already exists');
+                process.exit(1);
+            }
 
-        if(question_commit instanceof Promise ) {
+            let cmd_remote_add = 'git remote add ' + package_name + ' ' + repository_url;
+            let cmd_add_subtree = 'git subtree add --prefix=' + package_name + '/ ' + repository_url + ' master';
+            AbstractCommand.callShell(cmd_remote_add);
+            let {code, stdout, stderr} = AbstractCommand.callShell(cmd_add_subtree);
+            if (code === 1) {
+                console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url + '');
+                process.exit(1);
+            }
+            return stdout !== '' ? stdout : stderr;
+        });
 
-            question_commit.then(a => {
-                if (SubtreesConfig.subtreeExists(package_name)) {
-                    console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url
-                        + '. It already exists');
-                    process.exit(1);
-                }
-
-                let cmd_remote_add = 'git remote add ' + package_name + ' ' + repository_url;
-                let cmd_add_subtree = 'git subtree add --prefix=' + package_name + '/ ' + repository_url + ' master';
-                AbstractCommand.callShell(cmd_remote_add);
-                let {code, stdout, stderr} = AbstractCommand.callShell(cmd_add_subtree);
-                if (code === 1) {
-                    console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url + '');
-                    process.exit(1);
-                }
-                return stdout !== '' ? stdout : stderr;
-            });
-        }
 
     }
 
