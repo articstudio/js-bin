@@ -27,7 +27,7 @@ let constructor = function () {
                     }) : package_names.push(user_choice);
 
                     result = removeDirAndRemoteSubtree(repositories, package_names);
-                    //store = await showNewPackageQuestions();
+                    store = await showNewPackageQuestions();
 
                     if (store) {
                         WritePackageJson.removeSubtreeToComposer(package_names);
@@ -83,7 +83,6 @@ let constructor = function () {
                 AbstractCommand.callShell(cmd);
                 cmd = 'git commit -m "Removing ' + repo.name + ' subtree"';
                 let {code, stdout, stderr} = AbstractCommand.callShell(cmd);
-                console.log(code);
                 code === 0 ? result.done.push(repo) : result.error.push(repo);
                 continue;
 
