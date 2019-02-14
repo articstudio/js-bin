@@ -83,6 +83,7 @@ let constructor = function () {
                 AbstractCommand.callShell(cmd);
                 cmd = 'git commit -m "Removing ' + repo.name + ' subtree"';
                 let {exit_code, output, error} = AbstractCommand.callShell(cmd);
+                console.log(exit_code);
                 exit_code === 0 ? result.done.push(repo) : result.error.push(repo);
                 continue;
 
