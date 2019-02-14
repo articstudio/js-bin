@@ -1,4 +1,4 @@
-let SubtreesConfig = require('../utils/SubstreesConfig');
+let SubtreesConfig = require('../utils/GitConfig');
 let AbstractCommand = require('../../../AbstractCommand');
 let WritePackageJson = require('../../../Concerns/WritePackageJson');
 let AbstractMenuCommand = require('../../../AbstractMenuCommand');
@@ -15,7 +15,7 @@ let constructor = function () {
             ]);
             let package_name, repository_url, store;
             selectPackageMenu("Subtree packages", menu_options)
-                .then(function (user_choice) {
+                .then(async function (user_choice) {
                     if (!user_choice)
                         process.exit(1);
 
@@ -26,14 +26,14 @@ let constructor = function () {
                     repository_url = repository_url !== undefined ? repository_url.url : null;
 
                     if (user_choice === 'new') {
-                        showNewPackageQuestions().then(answers => {
+                        await showNewPackageQuestions().then(answers => {
                             [package_name, repository_url, store] = answers;
                             if (store) {
                                 WritePackageJson.addSubtreeToPackageJson({[package_name]: repository_url});
                             }
                         });
                     }
-                    addGitSubtree(package_name, repository_url).then(message => {
+                    await addGitSubtree(package_name, repository_url).then(message => {
                         console.log(message);
                     })
                 });
@@ -42,7 +42,7 @@ let constructor = function () {
     };
 
 
-    function showNewPackageQuestions(force_store = true) {
+    async function showNewPackageQuestions(force_store = true) {
 
         let questions = [
             {
@@ -72,8 +72,6 @@ let constructor = function () {
     async function addGitSubtree(package_name, repository_url) {
 
         await SubtreesConfig.commitPreviousChanges(package_name, repository_url);
-        console.log('aaaaaa');
-
 
         if (SubtreesConfig.subtreeExists(package_name)) {
             console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url

@@ -1,5 +1,4 @@
 const app = require('../../../Application');
-const shell = require('shelljs');
 const AbstractCommand = require('../../../AbstractCommand');
 
 module.exports = {
