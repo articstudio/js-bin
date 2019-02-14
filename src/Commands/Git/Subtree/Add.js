@@ -73,24 +73,10 @@ let constructor = function () {
         // let question_commit = new Promise((resolve, reject) => {
         //     resolve(true);
         // });
-        if (SubtreesConfig.getLocalChanges() && !SubtreesConfig.subtreeExists(package_name)) {
-            let question = {
-                type: 'input',
-                name: 'commit',
-                message: "You need to commit changes before add a subtree. " + "\n" + "Commit message: \n",
-                default: "WIP"
-            };
-            await AbstractCommand.ask(question)
-                .then(answer => {
-                    let commited = SubtreesConfig.commitChanges(answer.commit, '-a');
-                    if (!commited) {
-                        console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url +
-                            ' because have local changes to commit.');
-                        process.exit(1);
-                    }
-                    return commited;
-                });
-        }
+
+        await SubtreesConfig.commitPreviousChanges(package_name, repository_url);
+        console.log('aaaaaa');
+
 
         if (SubtreesConfig.subtreeExists(package_name)) {
             console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url

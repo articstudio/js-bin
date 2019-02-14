@@ -26,5 +26,27 @@ module.exports = {
     },
     subtreeExists: function (package_name) {
         return AbstractCommand.callShell('find . -type d -wholename "./' + package_name + '"').stdout !== '' ;
+    },
+    commitPreviousChanges: async function (package_name, repository_url)
+    {
+        if (this.getLocalChanges() && !this.subtreeExists(package_name)) {
+            let question = {
+                type: 'input',
+                name: 'commit',
+                message: "You need to commit changes before add a subtree. " + "\n" + "Commit message: \n",
+                default: "WIP"
+            };
+            return AbstractCommand.ask(question)
+                .then(answer => {
+                    let commited = this.commitChanges(answer.commit, '-a');
+                    if (!commited) {
+                        console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url +
+                            ' because have local changes to commit.');
+                        process.exit(1);
+                    }
+                    return commited;
+                });
+        }
+        return Promise.resolve(true);
     }
 };
