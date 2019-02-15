@@ -26,7 +26,6 @@ let constructor = function () {
 
 
                     await checkLocalChanges();
-                    
                     result = pullSubtree(repositories, package_names);
                     SubtreesConfig.showResume(result);
 
