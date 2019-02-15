@@ -32,7 +32,7 @@ let constructor = function () {
                             message: "You need to commit changes before pull a subtree. " + "\n" + "Commit message: \n",
                             default: "WIP"
                         };
-                        return await AbstractCommand.ask(question)
+                        return AbstractCommand.ask(question)
                             .then(answer => {
                                 return SubtreesConfig.commitChanges(answer.commit, '-a');
                             });
