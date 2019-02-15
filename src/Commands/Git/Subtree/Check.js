@@ -18,14 +18,17 @@ let constructor = function () {
             console.log('Package.json + subtree'.warn);
 
             let cmd_subtrees_git = "git log"
-                +" | grep git-subtree-dir"
-                +" | tr -d ' '"
-                +" | cut -d \":\" -f2"
-                +" | sort"
-                +" | uniq"
-                +" | xargs -I {} bash -c 'if [ -d $(git rev-parse --show-toplevel)/{} ] ; then echo {}; fi'";
+                + " | grep git-subtree-dir"
+                + " | tr -d ' '"
+                + " | cut -d \":\" -f2"
+                + " | sort"
+                + " | uniq"
+                + " | xargs -I {} bash -c 'if [ -d $(git rev-parse --show-toplevel)/{} ] ; then echo {}; fi'";
 
-            let subtrees_package = SubtreesConfig.getSubtrees();
+            let subtrees_package = [];
+            SubtreesConfig.getSubtrees().forEach(function (subtree) {
+                subtrees_package.push(subtree.name);
+            });
             let {code, stdout, stderr} = AbstractCommand.callShell(cmd_subtrees_git);
 
             let subtrees_git = stdout.split('\n').filter(value => {
@@ -49,7 +52,7 @@ let constructor = function () {
 
     function writeSubtreeInfo(subtree = []) {
         subtree.forEach(function (name) {
-           console.log(name.name);
+            console.log(name);
         });
     }
 };
