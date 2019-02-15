@@ -23,7 +23,6 @@
     "commander": "^2.19.0",
     "inquirer": "^6.2.2",
     "lodash": "^4.17.11",
-    "pad": "^2.2.2",
     "shelljs": "^0.8.3"
   },
   "config": {
@@ -33,5 +32,8 @@
   },
   "bin": {
     "jsbin": "bin/jsbin"
+  },
+  "devDependencies": {
+    "pad": "^2.2.2"
   }
 }

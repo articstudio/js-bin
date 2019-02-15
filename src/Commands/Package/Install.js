@@ -2,6 +2,14 @@ const PackageConfig = require('./Concerns/PackageJsonConfig');
 const AbstractCommand = require('../../AbstractCommand');
 const WritePackageJson = require('../../Concerns/WritePackageJson');
 const fs = require('fs');
+const colors = require('colors');
+
+colors.setTheme({
+    warn: 'yellow',
+    err: 'red',
+    success: 'green'
+});
+
 
 let constructor = function () {
 
@@ -20,9 +28,15 @@ let constructor = function () {
                     process.exit(1);
                 }
 
-                console.log(package_data);
-
                 let version = searchPackageVersion(input_package_name, package_data);
+                version = installDevPackage(version, input_package_name);
+
+                WritePackageJson.addPackageToPackageDependencies({[input_package_name]: version}, package_module_file, env);
+
+                let message_ok = "Package " + input_package_name + " successfully installed";
+                console.log(message_ok.success);
+
+                return true;
 
             });
 
@@ -52,18 +66,34 @@ let constructor = function () {
         ];
         return AbstractCommand.ask(questions)
             .then(answers => {
-                return [answers.package, answers.module, answers.store];
+                return [answers.package, answers.module, answers.store ? 'd' : null];
             });
     }
 
     function searchPackageVersion(search_package, package_json) {
         let result = false;
-        if (search_package in package_json.dependencies) {
+        if (package_json.hasOwnProperty('dependencies') && search_package in package_json.dependencies) {
             result = package_json.dependencies[search_package];
-        } else if (search_package in package_json.devDependencies) {
+        } else if (package_json.hasOwnProperty('devDependencies') && search_package in package_json.devDependencies) {
             result = package_json.devDependencies[search_package];
         }
         return result;
+    }
+
+    function installDevPackage(version, input_package_name) {
+        if (!version) {
+            if (AbstractCommand.callShell('npm install --save-dev ' + input_package_name).code !== 0) {
+                throw 'Error installing package: ' + input_package_name;
+            }
+            let package_data = JSON.parse(fs.readFileSync(PackageConfig.getPackageFile()));
+            version = searchPackageVersion(input_package_name, package_data);
+        }
+
+        if (!version) {
+            throw 'Package not found: ' + input_package_name;
+        }
+
+        return version;
     }
 
 
