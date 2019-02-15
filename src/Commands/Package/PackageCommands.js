@@ -1,15 +1,16 @@
 let AbstractMenuCommand = require('../../AbstractMenuCommand');
+let Install = require('./Install');
 
-let constructor = function (app, config) {
-    return AbstractMenuCommand(app, {
+let constructor = function (config) {
+    return AbstractMenuCommand({
         name: 'menu',
         message: 'Package JSON - JS-BIN',
         choices: [
             {
-                name: "Functionality 1",
-                value: "func1",
+                name: "Install",
+                value: "install",
                 callback: function () {
-                    //return new Add(app);
+                    return new Install().execute();
                 }
             },
             {
@@ -23,8 +24,8 @@ let constructor = function (app, config) {
     });
 };
 
-module.exports = function (app, config) {
-    return constructor(app, config)
+module.exports = function (config) {
+    return constructor(config)
         .prepare()
         .execute()
         .then(function (callback) {

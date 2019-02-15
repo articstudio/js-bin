@@ -27,7 +27,9 @@
     "shelljs": "^0.8.3"
   },
   "config": {
-    "subtree": {}
+    "subtree": {
+      "artic/test": "https://github.com/articstudio/git-test.git"
+    }
   },
   "bin": {
     "jsbin": "bin/jsbin"
