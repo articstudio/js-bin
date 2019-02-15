@@ -38,8 +38,8 @@ let constructor = function () {
                             });
                     }
 
-                    result = pullSubtree(repositories, package_names);
-                    SubtreesConfig.showResume(result);
+                    result = await pullSubtree(repositories, package_names);
+                    await SubtreesConfig.showResume(result);
 
                     return true;
 
