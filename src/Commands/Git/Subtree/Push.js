@@ -22,8 +22,8 @@ let constructor = function () {
                         package_names.push(subtree.name);
                     }) : package_names.push(user_choice);
 
-                    let result = pushSubtree(repositories, package_names) ?? {};
-                    SubtreesConfig.showResume(result);
+                    let result = pushSubtree(repositories, package_names);
+                    SubtreesConfig.showResume();
 
                     return true;
 
