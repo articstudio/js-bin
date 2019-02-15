@@ -25,21 +25,10 @@ let constructor = function () {
                     }) : package_names.push(user_choice);
 
 
-                    if (SubtreesConfig.getLocalChanges()) {
-                        let question = {
-                            type: 'input',
-                            name: 'commit',
-                            message: "You need to commit changes before pull a subtree. " + "\n" + "Commit message: \n",
-                            default: "WIP"
-                        };
-                        return AbstractCommand.ask(question)
-                            .then(answer => {
-                                return SubtreesConfig.commitChanges(answer.commit, '-a');
-                            });
-                    }
-
-                    result = await pullSubtree(repositories, package_names);
-                    await SubtreesConfig.showResume(result);
+                    await checkLocalChanges();
+                    
+                    result = pullSubtree(repositories, package_names);
+                    SubtreesConfig.showResume(result);
 
                     return true;
 
@@ -80,6 +69,21 @@ let constructor = function () {
         }
 
         return result;
+    }
+
+    function checkLocalChanges() {
+        if (SubtreesConfig.getLocalChanges()) {
+            let question = {
+                type: 'input',
+                name: 'commit',
+                message: "You need to commit changes before pull a subtree. " + "\n" + "Commit message: \n",
+                default: "WIP"
+            };
+            return AbstractCommand.ask(question)
+                .then(answer => {
+                    return SubtreesConfig.commitChanges(answer.commit, '-a');
+                });
+        }
     }
 };
 
