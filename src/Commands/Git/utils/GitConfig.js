@@ -3,7 +3,8 @@ const AbstractCommand = require('../../../AbstractCommand');
 const colors = require('colors');
 
 colors.setTheme({
-    warn: 'yellow'
+    warn: 'yellow',
+    err: 'red'
 });
 
 module.exports = {
@@ -72,6 +73,19 @@ module.exports = {
         console.log('Not found packages: '.warn);
         result.not_found.forEach(function (repo) {
             console.log('    - ' + repo.name);
+        });
+
+        console.log('');
+        console.log('------------------'.warn);
+        console.log('');
+
+        console.log('Message: '.warn);
+        result.message.forEach(function (m) {
+            console.log(m);
+        });
+        console.log('Error message: '.err);
+        result.err_message.forEach(function (m) {
+            console.log(m);
         });
 
         console.log("");

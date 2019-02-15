@@ -62,7 +62,9 @@ let constructor = function () {
             skipped: [],
             done: [],
             error: [],
-            not_found: []
+            not_found: [],
+            message: [],
+            err_message: []
         };
 
         for (let i = 0; i < repositories.length; i++) {

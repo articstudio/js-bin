@@ -6,6 +6,7 @@ let constructor = function () {
     return {
         execute: function () {
 
+            let result = {};
             let repositories = SubtreesConfig.getSubtrees();
             let menu_options = repositories.concat([{
                 name: "All subtrees",
@@ -22,8 +23,8 @@ let constructor = function () {
                         package_names.push(subtree.name);
                     }) : package_names.push(user_choice);
 
-                    let result = pushSubtree(repositories, package_names);
-                    SubtreesConfig.showResume();
+                    result = pushSubtree(repositories, package_names);
+                    SubtreesConfig.showResume(result);
 
                     return true;
 
@@ -38,7 +39,9 @@ let constructor = function () {
             skipped: [],
             done: [],
             error: [],
-            not_found: []
+            not_found: [],
+            message: [],
+            err_message: []
         };
 
         for (let i = 0; i < repositories.length; i++) {
@@ -52,6 +55,7 @@ let constructor = function () {
                 }
                 let cmd = 'git subtree push --prefix=' + repo.name +  '/ ' + repo.url + ' master';
                 let {code, stdout, stderr} = AbstractCommand.callShell(cmd);
+                code === 0 ? result.message.push(stdout)  : code > 0 ? result.err_message.push(stderr) : '';
                 code === 0 ? result.done.push(repo) : result.error.push(repo);
                 continue;
 
