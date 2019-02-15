@@ -27,10 +27,7 @@
     "shelljs": "^0.8.3"
   },
   "config": {
-    "subtree": {
-      "Articstudio/git-test": "https://github.com/articstudio/git-test.git",
-      "Articstudio/test-subtree": "https://github.com/Maurisss94/test-subtrees.git"
-    }
+    "subtree": {}
   },
   "bin": {
     "jsbin": "bin/jsbin"
