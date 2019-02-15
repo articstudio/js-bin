@@ -24,17 +24,11 @@ module.exports = {
             package_json_data.config.subtree = {};
         }
         let current_subtrees = Object.keys(package_json_data.config.subtree);
-        let copy_current_subtrees = current_subtrees.slice();
-
-        current_subtrees.forEach(function (current_subtree, index) {
-            if(itemsToRemove.indexOf(current_subtree) >= 0){
-                copy_current_subtrees.splice(index, 1);
-            }
+        current_subtrees.forEach(function (item) {
+            itemsToRemove.indexOf(item) >= 0 ? delete package_json_data.config.subtree[item] : null;
         });
 
-        package_json_data.config.subtree = copy_current_subtrees;
-
-        //WritePackageJson(package_json_data, package_json_file);
+        WritePackageJson(package_json_data, package_json_file);
     }
 };
 
