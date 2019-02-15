@@ -1,8 +1,6 @@
 const app = require('../../../Application');
 const AbstractCommand = require('../../../AbstractCommand');
 const colors = require('colors');
-const pad = require('pad');
-
 
 colors.setTheme({
     warn: 'yellow'
