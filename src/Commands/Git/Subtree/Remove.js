@@ -9,7 +9,7 @@ let constructor = function () {
     return {
         execute: function () {
             let repositories = SubtreesConfig.getSubtrees();
-            let store = null;
+            let force_store = null;
             let result = {};
             let menu_options = repositories.concat([{
                 name: "All subtrees",
@@ -27,9 +27,9 @@ let constructor = function () {
                     }) : package_names.push(user_choice);
 
                     result = removeDirAndRemoteSubtree(repositories, package_names);
-                    store = await showNewPackageQuestions();
+                    force_store = await showNewPackageQuestions();
 
-                    if (store) {
+                    if (force_store.store) {
                         WritePackageJson.removeSubtreeToComposer(package_names);
                     }
 
