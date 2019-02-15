@@ -57,7 +57,7 @@ let constructor = function () {
                 }
                 let cmd = 'git subtree pull --prefix=' + repo.name + '/ ' + repo.url + ' master --squash';
                 let {code, stdout, stderr} = AbstractCommand.callShell(cmd);
-                console.log(stdout);
+                console.log(stderr);
                 code === 0 ? result.message.push(stdout)  : code > 0 ? result.err_message.push(stderr) : '';
                 code === 0 ? result.done.push(repo) : result.error.push(repo);
                 continue;
