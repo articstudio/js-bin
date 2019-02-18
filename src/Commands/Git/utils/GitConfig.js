@@ -60,19 +60,19 @@ module.exports = {
 
         console.log('Skipped packages: '.warn);
         result.skipped.forEach(function (repo) {
-            console.log('    - ' + repo.name);
+            console.log('    - ' + repo);
         });
         console.log('Done packages: '.warn);
         result.done.forEach(function (repo) {
-            console.log('    - ' + repo.name);
+            console.log('    - ' + repo);
         });
         console.log('Error packages: '.warn);
         result.error.forEach(function (repo) {
-            console.log('    - ' + repo.name);
+            console.log('    - ' + repo);
         });
         console.log('Not found packages: '.warn);
         result.not_found.forEach(function (repo) {
-            console.log('    - ' + repo.name);
+            console.log('    - ' + repo);
         });
 
         console.log('');
