@@ -26,10 +26,7 @@
     "shelljs": "^0.8.3"
   },
   "config": {
-    "subtree": {
-      "Pigmento/sminkon-utils": "git@github.com:articstudio/pigmento-sminkon-utils.git",
-      "Pigmento/sminkon-core": "git@github.com:articstudio/pigmento-sminkon-core.git"
-    }
+    "subtree": {}
   },
   "bin": {
     "jsbin": "bin/jsbin"
