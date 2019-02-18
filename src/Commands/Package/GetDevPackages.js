@@ -19,7 +19,7 @@ let constructor = function () {
             ]);
             let package_names = [];
 
-            AbstractCommand.selectPackageMenu("Pull subtrees", menu_options)
+            AbstractCommand.selectPackageMenu("Load packages to project", menu_options)
                 .then(async function (user_choice) {
                     if (!user_choice)
                         process.exit(1);
