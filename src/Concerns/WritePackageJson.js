@@ -1,5 +1,6 @@
 const app = require('../Application');
 const fs = require('fs');
+const _ = require('lodash');
 
 module.exports = {
     addSubtreeToPackageJson: function (itemToAdd) {
@@ -16,6 +17,7 @@ module.exports = {
         WritePackageJson(package_json_data, package_json_file);
     },
     removeSubtreeToComposer: function (itemsToRemove) {
+
         let package_json = app.getPackage();
         let package_json_file = package_json.file;
         let package_json_data = package_json.data;
@@ -29,6 +31,25 @@ module.exports = {
         });
 
         WritePackageJson(package_json_data, package_json_file);
+    },
+    addPackageToDependencies: function (itemToAdd, package_file, env) {
+
+        let input_package_name = Object.keys(itemToAdd)[0];
+        let package_json = JSON.parse(fs.readFileSync(package_file));
+        env = (env && (env === 'd' || env === 'D')) ? 'devDependencies' : 'dependencies';
+        let packages = _.assign(package_json[env], itemToAdd);
+        package_json[env] = packages;
+
+        env = (env !== 'devDependencies') ? 'devDependencies' : 'dependencies';
+
+
+        if(_.has(package_json, env) && _.has(package_json[env], input_package_name)) {
+            delete package_json[env][input_package_name];
+        }
+        WritePackageJson(package_json, package_file);
+    },
+    Write: function(config, package_file) {
+        WritePackageJson(config, package_file);
     }
 };
 
