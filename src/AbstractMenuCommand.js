@@ -19,7 +19,7 @@ let constructor = function(config){
         },
         callChoiceCallback: function(choiceValue) {
             let choice = _.find(this.config.choices, {value:choiceValue});
-            return (choice && choice.callback) ? choice.callback : null;
+            return (choice && choice.callback) ? choice.callback : choiceValue;
         },
         execute: function() {
             let _self = this;

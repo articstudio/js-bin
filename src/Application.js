@@ -19,8 +19,6 @@ module.exports = {
     package_file: '',
     package_dir: '',
     setSettings: function () {
-        //let config = this.package.data ? {} : '';
-        //this.settings = config.jsbin ? {} : '';
         program.version(this.version, '-v, --version');
         this.registerCommand({name: '*', alias: '', description: '', action: err_func});
     },
@@ -42,13 +40,11 @@ module.exports = {
     discoverPackage: function () {
         this.package_dir = process.cwd();
         this.package_file = path.resolve(this.package_dir, 'package.json');
-        this.package = [
-            {
-                directory: this.package_dir,
-                file: this.package_file,
-                data: JSON.parse(fs.readFileSync(this.package_file, 'utf-8'))
-            }
-        ];
+        this.package = {
+            directory: this.package_dir,
+            file: this.package_file,
+            data: JSON.parse(fs.readFileSync(this.package_file, 'utf-8'))
+        }
     },
     getPackage: function () {
         return this.package;

@@ -15,35 +15,35 @@ let constructor = function (config) {
                 name: "Add",
                 value: "add",
                 callback: function () {
-                    return new Add();
+                    return new Add().execute();
                 }
             },
             {
                 name: "Push",
                 value: "push",
                 callback: function () {
-                    return new Push();
+                    return new Push().execute();
                 }
             },
             {
                 name: "Pull",
                 value: "pull",
                 callback: function () {
-                    return new Pull();
+                    return new Pull().execute();
                 }
             },
             {
                 name: "Remove",
                 value: "remove",
                 callback: function () {
-                    return new Remove();
+                    return new Remove().execute();
                 }
             },
             {
                 name: "Check",
                 value: "check",
                 callback: function () {
-                    return new Check();
+                    return new Check().execute();
                 }
             }
         ]
