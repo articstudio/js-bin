@@ -1,7 +1,6 @@
 const PackageConfig = require('./Concerns/PackageJsonConfig');
 const SubtreesConfig = require('../Git/utils/GitConfig');
 const AbstractCommand = require('../../AbstractCommand');
-const normalizeData = require('normalize-package-data')
 
 let constructor = function () {
 
@@ -12,27 +11,38 @@ let constructor = function () {
 
             let packages = SubtreesConfig.getSubtrees();
             let menu_options = packages.concat([{
-                name: "Root project",
-                value: "root"
-            }, {
                 name: "All modules",
                 value: "all"
             }
             ]);
             let package_names = [];
+            let result = {
+                skipped: [],
+                done: [],
+                error: [],
+                not_found: [],
+                message: [],
+                err_message: []
+            };
 
-            AbstractCommand.selectPackageMenu("Update packages versions", menu_options)
+            AbstractCommand.selectPackageMenu("Publish npm package", menu_options)
                 .then(async function (user_choice) {
                     if (!user_choice)
                         process.exit(1);
 
                     user_choice === 'all' ? packages.forEach(function (subtree) {
                         package_names.push(subtree.name);
-                    }) : user_choice === 'root' ? package_names.push(PackageConfig.getPackageFile()) : package_names.push(user_choice);
+                    }) : package_names.push(user_choice);
+
 
                     package_names.forEach(function (p) {
-                        PackageConfig.getPackagesJson(p).map(normalizePackageFile);
+                        let cmd = 'cd ' + p + ' && npm publish';
+                        let {code, stdout, stderr} = AbstractCommand.callShell(cmd);
+                        code === 0 ? result.message.push(stdout)  : code > 0 ? result.err_message.push(stderr) : '';
+                        code === 0 ? result.done.push(p) : result.error.push(p);
                     });
+
+                    SubtreesConfig.showResume(result);
 
                     return true;
                 });
@@ -40,9 +50,6 @@ let constructor = function () {
         }
     };
 
-    function normalizePackageFile(fname) {
-        normalizeData(fname);
-    }
 };
 
 module.exports = constructor;

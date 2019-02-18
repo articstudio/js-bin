@@ -14,7 +14,7 @@ let constructor = function () {
 
             let packages = SubtreesConfig.getSubtrees();
             let menu_options = packages.concat([{
-                name: "All subtrees",
+                name: "All modules",
                 value: "all"
             }
             ]);

@@ -2,6 +2,7 @@ let AbstractMenuCommand = require('../../AbstractMenuCommand');
 let Install = require('./Install');
 let GetDevPackages = require('./GetDevPackages');
 let Update = require('./Update');
+let Publish = require('./Publish');
 
 let constructor = function (config) {
     return AbstractMenuCommand({
@@ -20,6 +21,13 @@ let constructor = function (config) {
                 value: "update-versions",
                 callback: function () {
                     return new Update().execute();
+                }
+            },
+            {
+                name: "Publish package",
+                value: "publish",
+                callback: function () {
+                    return new Publish().execute();
                 }
             },
             {
