@@ -31,7 +31,7 @@ let constructor = function () {
                 let version = searchPackageVersion(input_package_name, package_data);
                 version = installDevPackage(version, input_package_name);
 
-                WritePackageJson.addPackageToPackageDependencies({[input_package_name]: version}, package_module_file, env);
+                WritePackageJson.addPackageToDependencies({[input_package_name]: version}, package_module_file, env);
 
                 let message_ok = "Package " + input_package_name + " successfully installed";
                 console.log(message_ok.success);
