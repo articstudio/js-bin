@@ -47,6 +47,9 @@ module.exports = {
             delete package_json[env][input_package_name];
         }
         WritePackageJson(package_json, package_file);
+    },
+    Write: function(config, package_file) {
+        WritePackageJson(config, package_file);
     }
 };
 

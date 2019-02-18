@@ -1,5 +1,6 @@
 let AbstractMenuCommand = require('../../AbstractMenuCommand');
 let Install = require('./Install');
+let GetDevPackages = require('./GetDevPackages');
 
 let constructor = function (config) {
     return AbstractMenuCommand({
@@ -14,10 +15,10 @@ let constructor = function (config) {
                 }
             },
             {
-                name: "Functionality 2",
-                value: "func2",
+                name: "Load Packages",
+                value: "getDevPackages",
                 callback: function () {
-                    //return new Push(app);
+                    return new GetDevPackages().execute();
                 }
             }
         ]
