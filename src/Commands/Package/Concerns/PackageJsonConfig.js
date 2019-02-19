@@ -1,5 +1,4 @@
 const app = require('../../../Application');
-const AbstractCommand = require('../../../AbstractCommand');
 const shell = require('shelljs');
 const path = require('path');
 
