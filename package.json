@@ -1,6 +1,6 @@
 {
   "name": "js-bin",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -23,20 +23,14 @@
     "commander": "^2.19.0",
     "inquirer": "^6.2.2",
     "lodash": "^4.17.11",
-    "shelljs": "^0.8.3"
-  },
-  "config": {
-    "subtree": {
-      "Pigmento/sminkon-core": "git@github.com:articstudio/pigmento-sminkon-core.git"
-    }
-  },
-  "bin": {
-    "jsbin": "bin/jsbin"
-  },
-  "devDependencies": {
+    "shelljs": "^0.8.3",
     "chai": "^4.2.0",
     "eslint": "^5.14.1",
     "mocha": "^6.0.0",
     "pad": "^2.2.2"
-  }
+  },
+  "bin": {
+    "jsbin": "bin/jsbin"
+  },
+  "devDependencies": {}
 }
