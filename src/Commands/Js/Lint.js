@@ -1,20 +1,22 @@
 const AbstractCommand = require('../../AbstractCommand');
 const PackageJsonConfig = require('../Package/Concerns/PackageJsonConfig');
+const fs = require('fs');
 
 let constructor = function () {
 
     return {
         execute: async function () {
 
-            let cmd = './node_modules/.bin/eslint ' + PackageJsonConfig.getPackagePath();
-            //TODO: Falta copiar l'arxiu .eslintrc.json a l'arrel del projecte instal·lat.
-            let{code, stdout, stderr} = AbstractCommand.callShell(cmd);
-            console.log(stdout);
+            let config_file = fs.existsSync('./node_modules/js-bin/.eslintrc.json') ? './node_modules/js-bin/.eslintrc.json' : './.eslintrc.json';
+            let cmd = './node_modules/.bin/eslint -c ' + config_file + ' ' + PackageJsonConfig.getPackagePath();
+            let {code, stdout, stderr} = AbstractCommand.callShell(cmd);
+
+            code === 0 ? console.log('All done.') : code === 1 ? console.log(stdout) : console.log(stderr.err);
 
             return true;
         }
     };
-    
+
 };
 
 module.exports = constructor;

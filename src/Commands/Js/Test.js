@@ -7,7 +7,7 @@ let constructor = function () {
 
             let{code, stdout, stderr} = AbstractCommand.callShell('npm test');
 
-            console.log(stdout);
+            code === 0 ? console.log(stdout) : console.log(stderr.err);
             return code === 0;
         }
     };
