@@ -83,7 +83,7 @@ let constructor = function () {
         AbstractCommand.callShell(cmd_remote_add);
         let {code, stdout, stderr} = AbstractCommand.callShell(cmd_add_subtree);
         if (code === 1) {
-            console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url + '');
+            console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url + '' + "\n"+ stderr);
             process.exit(1);
         }
         return stdout !== '' ? stdout : stderr;

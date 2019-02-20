@@ -7,6 +7,7 @@ let constructor = function () {
         execute: async function () {
 
             let cmd = './node_modules/.bin/eslint ' + PackageJsonConfig.getPackagePath();
+            //TODO: Falta copiar l'arxiu .eslintrc.json a l'arrel del projecte instal·lat.
             let{code, stdout, stderr} = AbstractCommand.callShell(cmd);
             console.log(stdout);
 
