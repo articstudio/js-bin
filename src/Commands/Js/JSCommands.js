@@ -1,6 +1,7 @@
 const AbstractMenuCommand = require('../../AbstractMenuCommand');
 const Lint = require('./Lint');
 const Metrics = require('./Metrics');
+const Test = require('./Test');
 
 let constructor = function (config) {
     return AbstractMenuCommand({
@@ -15,10 +16,10 @@ let constructor = function (config) {
                 }
             },
             {
-                name: "JS Metrics",
-                value: "metrics",
+                name: "Tests",
+                value: "test",
                 callback: function () {
-                    return new Metrics().execute();
+                    return new Test().execute();
                 }
             },
         ]
