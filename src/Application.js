@@ -45,7 +45,7 @@ module.exports = {
             file: this.package_file,
             data: JSON.parse(fs.readFileSync(this.package_file, 'utf-8'))
         };
-        this.package.data.config = {};
+        this.package.data['config'] = {};
     },
     getPackage: function () {
         return this.package;
