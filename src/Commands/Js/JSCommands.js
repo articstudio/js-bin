@@ -1,6 +1,5 @@
 const AbstractMenuCommand = require('../../AbstractMenuCommand');
 const Lint = require('./Lint');
-const Metrics = require('./Metrics');
 const Test = require('./Test');
 
 let constructor = function (config) {

@@ -1,4 +1,3 @@
-const PackageConfig = require('./Concerns/PackageJsonConfig');
 const SubtreesConfig = require('../Git/utils/GitConfig');
 const AbstractCommand = require('../../AbstractCommand');
 
