@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,9 @@
     "jsbin": "bin/jsbin"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^5.14.1",
+    "mocha": "^6.0.0",
     "pad": "^2.2.2"
   }
 }

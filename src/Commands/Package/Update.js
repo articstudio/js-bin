@@ -2,7 +2,6 @@ const PackageConfig = require('./Concerns/PackageJsonConfig');
 const SubtreesConfig = require('../Git/utils/GitConfig');
 const AbstractCommand = require('../../AbstractCommand');
 const WritePackageJson = require('../../Concerns/WritePackageJson');
-const _ = require('lodash');
 const fs = require('fs');
 
 let constructor = function () {
@@ -45,8 +44,8 @@ let constructor = function () {
     function replaceDependenciesVersions(obj) {
         let package_name, result = {};
         for (package_name in obj) {
-            result[package_name] = (package_name in versions) ? versions[package_name] : obj[package_name];
-            let symbol = versions[package_name] === obj[package_name] ? '=' : '+';
+            result[package_name] = (package_name in this.versions) ? this.versions[package_name] : obj[package_name];
+            let symbol = this.versions[package_name] === obj[package_name] ? '=' : '+';
             symbol === '+' ? console.log('%s %s@%s'.success, symbol, package_name, result[package_name]) :
                 console.log('%s %s@%s'.warn, symbol, package_name, result[package_name])
         }

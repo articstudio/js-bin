@@ -1,30 +1,32 @@
-let AbstractMenuCommand = require('../../AbstractMenuCommand');
+const AbstractMenuCommand = require('../../AbstractMenuCommand');
+const Lint = require('./Lint');
+const Test = require('./Test');
 
-let constructor = function (app, config) {
-    return AbstractMenuCommand(app, {
+let constructor = function (config) {
+    return AbstractMenuCommand({
         name: 'menu',
         message: 'JS Utilities - JS-BIN',
         choices: [
             {
-                name: "Functionality 1",
-                value: "func1",
+                name: "ESLint",
+                value: "eslint",
                 callback: function () {
-                    //return new Add(app);
+                    return new Lint().execute();
                 }
             },
             {
-                name: "Functionality 2",
-                value: "func2",
+                name: "Tests",
+                value: "test",
                 callback: function () {
-                    //return new Push(app);
+                    return new Test().execute();
                 }
-            }
+            },
         ]
     });
 };
 
-module.exports = function (app, config) {
-    return constructor(app, config)
+module.exports = function (config) {
+    return constructor(config)
         .prepare()
         .execute()
         .then(function (callback) {

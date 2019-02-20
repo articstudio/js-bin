@@ -1,5 +1,4 @@
 const inquirer = require('inquirer');
-const colors = require('colors');
 
 const questions = [
     { type: 'confirm', name: 'test', message: 'Is this a test?', default: true}
