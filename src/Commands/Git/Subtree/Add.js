@@ -78,8 +78,9 @@ let constructor = function () {
             process.exit(1);
         }
 
-        let cmd_remote_add = 'git remote add ' + package_name + ' ' + repository_url;
-        let cmd_add_subtree = 'git subtree add --prefix=' + package_name + '/ ' + repository_url + ' master';
+        let dir = SubtreesConfig.getPackageDirectory(package_name);
+        let cmd_remote_add = 'git remote add ' + dir + ' ' + repository_url;
+        let cmd_add_subtree = 'git subtree add --prefix=' + dir + '/ ' + repository_url + ' master';
         AbstractCommand.callShell(cmd_remote_add);
         let {code, stdout, stderr} = AbstractCommand.callShell(cmd_add_subtree);
         if (code === 1) {

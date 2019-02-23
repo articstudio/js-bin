@@ -30,6 +30,7 @@ let constructor = function () {
                 subtrees_package.push(subtree.name);
             });
             let {code, stdout, stderr} = AbstractCommand.callShell(cmd_subtrees_git);
+            console.log(stdout);
 
             let subtrees_git = stdout.split('\n').filter(value => {
                 return value !== '';

@@ -9,7 +9,7 @@ colors.setTheme({
 
 module.exports = {
     getSubtrees: function () {
-        let package_json = app.getPackage();
+        let _self = this, package_json = app.getPackage();
         let config = package_json.hasOwnProperty('data') && package_json.data.hasOwnProperty('config') ? package_json.data.config : [];
 
         if (!config.hasOwnProperty('subtree')) {
@@ -19,6 +19,7 @@ module.exports = {
         return Object.keys(config.subtree).map(key => {
             return {
                 name: key,
+                dir: _self.getPackageDirectory(key),
                 url: config.subtree[key]
             }
         });
@@ -38,8 +39,7 @@ module.exports = {
     },
     subtreeExists: function (package_name) {
         let dir = this.getPackageDirectory(package_name);
-        console.log(dir);
-        return AbstractCommand.callShell('find . -type d -wholename "./' + package_name + '"').stdout !== '';
+        return AbstractCommand.callShell('find . -type d -wholename "./' + dir + '"').stdout !== '';
     },
     commitPreviousChanges: function (package_name, repository_url) {
         if (this.getLocalChanges() && !this.subtreeExists(package_name)) {
