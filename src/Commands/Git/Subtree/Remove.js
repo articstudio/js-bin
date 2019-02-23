@@ -76,11 +76,12 @@ let constructor = function () {
                     i--;
                     continue;
                 }
-                let cmd = 'git remote rm ' + repo.name;
+                let dir = SubtreesConfig.getPackageDirectory(repo.name);
+                let cmd = 'git remote rm ' + dir;
                 AbstractCommand.callShell(cmd);
-                cmd = 'git rm -r ' + repo.name + '/';
+                cmd = 'git rm -r ' + dir + '/';
                 AbstractCommand.callShell(cmd);
-                cmd = 'rm -r ' + repo.name + '/';
+                cmd = 'rm -r ' + dir + '/';
                 AbstractCommand.callShell(cmd);
                 cmd = 'git commit -m "Removing ' + repo.name + ' subtree"';
                 let {code, stdout, stderr} = AbstractCommand.callShell(cmd);

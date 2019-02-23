@@ -30,10 +30,12 @@ let constructor = function () {
                 subtrees_package.push(subtree.name);
             });
             let {code, stdout, stderr} = AbstractCommand.callShell(cmd_subtrees_git);
-            console.log(stdout);
 
             let subtrees_git = stdout.split('\n').filter(value => {
                 return value !== '';
+            });
+            subtrees_git.forEach(function(item, index){
+                subtrees_git[index] = SubtreesConfig.getPackageFromDirectory(item);
             });
 
             let package_and_subtree = _.intersection(subtrees_package, subtrees_git);

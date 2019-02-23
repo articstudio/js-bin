@@ -19,7 +19,6 @@ module.exports = {
         return Object.keys(config.subtree).map(key => {
             return {
                 name: key,
-                dir: _self.getPackageDirectory(key),
                 url: config.subtree[key]
             }
         });
@@ -30,7 +29,17 @@ module.exports = {
     commitChanges: function (message, files) {
         return AbstractCommand.callShell('git commit -m "' + message + '" ' + files).code === 0;
     },
-    getPackageDirectory: function(package_name){
+    getPackageFromDirectory: function (dir) {
+        let dir_arr = dir.split('/');
+        if (dir_arr.length === 1) {
+            return dir;
+        }
+        if (dir_arr.length > 2) {
+            dir_arr.splice(0, 2, dir_arr[0] + '/' + dir_arr[1]);
+        }
+        return dir_arr.join('-');
+    },
+    getPackageDirectory: function (package_name) {
         let dir_arr = package_name.split('-');
         if (dir_arr.length > 1) {
             dir_arr.splice(0, 2, dir_arr[0] + '/' + dir_arr[1]);
@@ -50,15 +59,15 @@ module.exports = {
                 default: "WIP"
             };
             return AbstractCommand.ask(question)
-                .then(answer => {
-                    let commited = this.commitChanges(answer.commit, '-a');
-                    if (!commited) {
-                        console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url +
-                            ' because have local changes to commit.');
-                        process.exit(1);
-                    }
-                    return commited;
-                });
+                    .then(answer => {
+                        let commited = this.commitChanges(answer.commit, '-a');
+                        if (!commited) {
+                            console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url +
+                                    ' because have local changes to commit.');
+                            process.exit(1);
+                        }
+                        return commited;
+                    });
         }
         return Promise.resolve(true);
     },
@@ -84,18 +93,30 @@ module.exports = {
             console.log('    - ' + repo);
         });
 
+        if ((!result.message || result.message.length === 0) && (!result.err_message || result.err_message.length === 0))
+        {
+            return;
+        }
+
         console.log('');
         console.log('------------------'.warn);
         console.log('');
 
-        console.log('Message: '.warn);
-        result.message.forEach(function (m) {
-            console.log(m);
-        });
-        console.log('Error message: '.err);
-        result.err_message.forEach(function (m) {
-            console.log(m);
-        });
+        if ((result.message && result.message.length > 0))
+        {
+            console.log('Message: '.warn);
+            result.message.forEach(function (m) {
+                console.log(m);
+            });
+        }
+
+        if ((result.err_message && result.err_message.length > 0))
+        {
+            console.log('Error message: '.err);
+            result.err_message.forEach(function (m) {
+                console.log(m);
+            });
+        }
 
         console.log("");
     }
