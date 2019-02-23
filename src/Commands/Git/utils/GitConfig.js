@@ -29,7 +29,16 @@ module.exports = {
     commitChanges: function (message, files) {
         return AbstractCommand.callShell('git commit -m "' + message + '" ' + files).code === 0;
     },
+    getPackageDirectory: function(package_name){
+        let dir_arr = package_name.split('-');
+        if (dir_arr.length > 1) {
+            dir_arr.splice(0, 2, dir_arr[0] + '/' + dir_arr[1]);
+        }
+        return dir_arr.join('-');
+    },
     subtreeExists: function (package_name) {
+        let dir = this.getPackageDirectory(package_name);
+        console.log(dir);
         return AbstractCommand.callShell('find . -type d -wholename "./' + package_name + '"').stdout !== '';
     },
     commitPreviousChanges: function (package_name, repository_url) {

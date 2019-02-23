@@ -32,5 +32,10 @@
   "bin": {
     "jsbin": "bin/jsbin"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "config": {
+    "subtree": {
+      "pigmento-webpack": "git@github.com:articstudio/pigmento-webpack.git"
+    }
+  }
 }
