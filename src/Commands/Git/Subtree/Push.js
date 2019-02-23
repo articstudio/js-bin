@@ -53,7 +53,8 @@ let constructor = function () {
                     i--;
                     continue;
                 }
-                let cmd = 'git subtree push --prefix=' + repo.name +  '/ ' + repo.url + ' master';
+                let dir = SubtreesConfig.getPackageDirectory(repo.name);
+                let cmd = 'git subtree push --prefix=' + dir +  '/ ' + repo.url + ' master';
                 let {code, stdout, stderr} = AbstractCommand.callShell(cmd);
                 code === 0 ? result.message.push(stdout)  : code > 0 ? result.err_message.push(stderr) : '';
                 code === 0 ? result.done.push(repo.name) : result.error.push(repo.name);

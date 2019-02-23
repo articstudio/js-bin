@@ -9,7 +9,7 @@ colors.setTheme({
 
 module.exports = {
     getSubtrees: function () {
-        let package_json = app.getPackage();
+        let _self = this, package_json = app.getPackage();
         let config = package_json.hasOwnProperty('data') && package_json.data.hasOwnProperty('config') ? package_json.data.config : [];
 
         if (!config.hasOwnProperty('subtree')) {
@@ -29,8 +29,26 @@ module.exports = {
     commitChanges: function (message, files) {
         return AbstractCommand.callShell('git commit -m "' + message + '" ' + files).code === 0;
     },
+    getPackageFromDirectory: function (dir) {
+        let dir_arr = dir.split('/');
+        if (dir_arr.length === 1) {
+            return dir;
+        }
+        if (dir_arr.length > 2) {
+            dir_arr.splice(0, 2, dir_arr[0] + '/' + dir_arr[1]);
+        }
+        return dir_arr.join('-');
+    },
+    getPackageDirectory: function (package_name) {
+        let dir_arr = package_name.split('-');
+        if (dir_arr.length > 1) {
+            dir_arr.splice(0, 2, dir_arr[0] + '/' + dir_arr[1]);
+        }
+        return dir_arr.join('-');
+    },
     subtreeExists: function (package_name) {
-        return AbstractCommand.callShell('find . -type d -wholename "./' + package_name + '"').stdout !== '';
+        let dir = this.getPackageDirectory(package_name);
+        return AbstractCommand.callShell('find . -type d -wholename "./' + dir + '"').stdout !== '';
     },
     commitPreviousChanges: function (package_name, repository_url) {
         if (this.getLocalChanges() && !this.subtreeExists(package_name)) {
@@ -41,15 +59,15 @@ module.exports = {
                 default: "WIP"
             };
             return AbstractCommand.ask(question)
-                .then(answer => {
-                    let commited = this.commitChanges(answer.commit, '-a');
-                    if (!commited) {
-                        console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url +
-                            ' because have local changes to commit.');
-                        process.exit(1);
-                    }
-                    return commited;
-                });
+                    .then(answer => {
+                        let commited = this.commitChanges(answer.commit, '-a');
+                        if (!commited) {
+                            console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url +
+                                    ' because have local changes to commit.');
+                            process.exit(1);
+                        }
+                        return commited;
+                    });
         }
         return Promise.resolve(true);
     },
@@ -75,18 +93,30 @@ module.exports = {
             console.log('    - ' + repo);
         });
 
+        if ((!result.message || result.message.length === 0) && (!result.err_message || result.err_message.length === 0))
+        {
+            return;
+        }
+
         console.log('');
         console.log('------------------'.warn);
         console.log('');
 
-        console.log('Message: '.warn);
-        result.message.forEach(function (m) {
-            console.log(m);
-        });
-        console.log('Error message: '.err);
-        result.err_message.forEach(function (m) {
-            console.log(m);
-        });
+        if ((result.message && result.message.length > 0))
+        {
+            console.log('Message: '.warn);
+            result.message.forEach(function (m) {
+                console.log(m);
+            });
+        }
+
+        if ((result.err_message && result.err_message.length > 0))
+        {
+            console.log('Error message: '.err);
+            result.err_message.forEach(function (m) {
+                console.log(m);
+            });
+        }
 
         console.log("");
     }

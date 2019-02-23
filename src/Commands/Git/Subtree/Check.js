@@ -34,6 +34,9 @@ let constructor = function () {
             let subtrees_git = stdout.split('\n').filter(value => {
                 return value !== '';
             });
+            subtrees_git.forEach(function(item, index){
+                subtrees_git[index] = SubtreesConfig.getPackageFromDirectory(item);
+            });
 
             let package_and_subtree = _.intersection(subtrees_package, subtrees_git);
             writeSubtreeInfo(package_and_subtree);
