@@ -23,7 +23,7 @@ By default this command take a set of subtrees who indicate in `package.json`, a
 
 **Git subtree menu:**
 
-![Git subtree menu](assets/git_subtree_readme.png)
+![Git subtree menu](https://github.com/articstudio/js-bin/raw/assets/git_subtree_readme.png)
 
 ## JS helpers:
 
@@ -34,27 +34,27 @@ Provides some commands to manage a js tasks:
 
 **JS Utilities:**
 
-![JS_utilities](assets/js_readme.png)
+![JS_utilities](https://github.com/articstudio/js-bin/raw/assets/js_readme.png)
 
 ## Package.json helpers:
 
 
 Provides some commands to manage a package.json file more easily:
 
-![JS_utilities](assets/package_json_readme.png)
+![JS_utilities](https://github.com/articstudio/js-bin/raw/assets/package_json_readme.png)
 
-#### Install dev
+#### Install
 
 This command, add a package into a module (subtree), this package will added into file package.json (in `dependencies` or `devDependencies`, deppends envoirment parameter) of module, 
 and will install into root project (`node_modules` folder).
 
-#### Load dev packages
-
-Load all module dependencies and devDependencies to root file package.json like devDependencies
-
-#### Solve versions conflicts
+#### Update versions
 
 Solve conflicts about versions from root project package.json, to module or modules package.json file.
+
+#### Load packages
+
+Load all module dependencies and devDependencies to root file package.json like devDependencies
 
 #### Publish package
 
