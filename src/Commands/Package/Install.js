@@ -1,6 +1,6 @@
-const PackageConfig = require('./Concerns/PackageJsonConfig');
+const PackageConfig = require('../../utils/PackageJsonConfig');
 const AbstractCommand = require('../../AbstractCommand');
-const WritePackageJson = require('../../Concerns/WritePackageJson');
+const WritePackageJson = require('../../utils/WritePackageJson');
 const fs = require('fs');
 const colors = require('colors');
 

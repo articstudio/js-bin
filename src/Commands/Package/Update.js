@@ -1,7 +1,7 @@
-const PackageConfig = require('./Concerns/PackageJsonConfig');
-const SubtreesConfig = require('../Git/utils/GitConfig');
+const PackageConfig = require('../../utils/PackageJsonConfig');
+const SubtreesConfig = require('../../utils/GitConfig');
 const AbstractCommand = require('../../AbstractCommand');
-const WritePackageJson = require('../../Concerns/WritePackageJson');
+const WritePackageJson = require('../../utils/WritePackageJson');
 const fs = require('fs');
 
 let constructor = function () {

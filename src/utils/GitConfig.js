@@ -1,5 +1,6 @@
-const app = require('../../../Application');
-const AbstractCommand = require('../../../AbstractCommand');
+const app = require('../Application');
+const AbstractCommand = require('../AbstractCommand');
+const PackageUtils = require('./PackageUtils');
 const colors = require('colors');
 
 colors.setTheme({
@@ -29,25 +30,8 @@ module.exports = {
     commitChanges: function (message, files) {
         return AbstractCommand.callShell('git commit -m "' + message + '" ' + files).code === 0;
     },
-    getPackageFromDirectory: function (dir) {
-        let dir_arr = dir.split('/');
-        if (dir_arr.length === 1) {
-            return dir;
-        }
-        if (dir_arr.length > 2) {
-            dir_arr.splice(0, 2, dir_arr[0] + '/' + dir_arr[1]);
-        }
-        return dir_arr.join('-');
-    },
-    getPackageDirectory: function (package_name) {
-        let dir_arr = package_name.split('-');
-        if (dir_arr.length > 1) {
-            dir_arr.splice(0, 2, dir_arr[0] + '/' + dir_arr[1]);
-        }
-        return dir_arr.join('-');
-    },
     subtreeExists: function (package_name) {
-        let dir = this.getPackageDirectory(package_name);
+        let dir = PackageUtils.getPackageDirectory(package_name);
         return AbstractCommand.callShell('find . -type d -wholename "./' + dir + '"').stdout !== '';
     },
     commitPreviousChanges: function (package_name, repository_url) {

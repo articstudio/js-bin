@@ -1,4 +1,4 @@
-const SubtreesConfig = require('../Git/utils/GitConfig');
+const SubtreesConfig = require('../../utils/GitConfig');
 const AbstractCommand = require('../../AbstractCommand');
 
 let constructor = function () {

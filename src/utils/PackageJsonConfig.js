@@ -1,4 +1,4 @@
-const app = require('../../../Application');
+const app = require('../Application');
 const shell = require('shelljs');
 const path = require('path');
 

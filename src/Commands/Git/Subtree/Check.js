@@ -1,5 +1,6 @@
 const AbstractCommand = require('../../../AbstractCommand');
-const SubtreesConfig = require('../utils/GitConfig');
+const SubtreesConfig = require('../../../utils/GitConfig');
+const PackageUtils = require('../../../utils/PackageUtils');
 const colors = require('colors');
 const _ = require('lodash');
 
@@ -35,7 +36,7 @@ let constructor = function () {
                 return value !== '';
             });
             subtrees_git.forEach(function(item, index){
-                subtrees_git[index] = SubtreesConfig.getPackageFromDirectory(item);
+                subtrees_git[index] = PackageUtils.getPackageFromDirectory(item);
             });
 
             let package_and_subtree = _.intersection(subtrees_package, subtrees_git);

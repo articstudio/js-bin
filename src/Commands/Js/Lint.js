@@ -1,5 +1,5 @@
 const AbstractCommand = require('../../AbstractCommand');
-const PackageJsonConfig = require('../Package/Concerns/PackageJsonConfig');
+const PackageJsonConfig = require('../../utils/PackageJsonConfig');
 const fs = require('fs');
 
 let constructor = function () {

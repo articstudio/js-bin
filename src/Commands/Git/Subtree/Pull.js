@@ -1,4 +1,5 @@
-const SubtreesConfig = require('../utils/GitConfig');
+const SubtreesConfig = require('../../../utils/GitConfig');
+const PackageUtils = require('../../../utils/PackageUtils');
 const AbstractCommand = require('../../../AbstractCommand');
 
 let constructor = function () {
@@ -55,7 +56,7 @@ let constructor = function () {
                     i--;
                     continue;
                 }
-                let dir = SubtreesConfig.getPackageDirectory(repo.name);
+                let dir = PackageUtils.getPackageDirectory(repo.name);
                 let cmd = 'git subtree pull --prefix=' + dir + '/ ' + repo.url + ' master --squash';
                 let {code, stdout, stderr} = AbstractCommand.callShell(cmd);
                 code === 0 && stdout.length > 0 ? result.message.push(stdout)  : code > 0 || stderr.length > 0 ? result.err_message.push(stderr) : '';

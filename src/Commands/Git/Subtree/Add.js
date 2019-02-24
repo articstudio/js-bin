@@ -1,6 +1,7 @@
-const SubtreesConfig = require('../utils/GitConfig');
+const SubtreesConfig = require('../../../utils/GitConfig');
+const PackageUtils = require('../../../utils/PackageUtils');
 const AbstractCommand = require('../../../AbstractCommand');
-const WritePackageJson = require('../../../Concerns/WritePackageJson');
+const WritePackageJson = require('../../../utils/WritePackageJson');
 
 let constructor = function () {
 
@@ -78,7 +79,7 @@ let constructor = function () {
             process.exit(1);
         }
 
-        let dir = SubtreesConfig.getPackageDirectory(package_name);
+        let dir = PackageUtils.getPackageDirectory(package_name);
         let cmd_remote_add = 'git remote add ' + dir + ' ' + repository_url;
         let cmd_add_subtree = 'git subtree add --prefix=' + dir + '/ ' + repository_url + ' master';
         AbstractCommand.callShell(cmd_remote_add);
