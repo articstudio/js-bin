@@ -36,7 +36,8 @@
   "devDependencies": {},
   "config": {
     "subtree": {
-      "pigmento-webpack": "git@github.com:articstudio/pigmento-webpack.git"
+      "pigmento-webpack": "git@github.com:articstudio/pigmento-webpack.git",
+      "pigmento-skin-prodaisa": "git@github.com:articstudio/pigmento-skin-prodaisa.git"
     }
   }
 }
