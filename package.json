@@ -37,7 +37,8 @@
   "config": {
     "subtree": {
       "pigmento-webpack": "git@github.com:articstudio/pigmento-webpack.git",
-      "pigmento-skin-prodaisa": "git@github.com:articstudio/pigmento-skin-prodaisa.git"
+      "pigmento-skin-prodaisa": "git@github.com:articstudio/pigmento-skin-prodaisa.git",
+      "pigmento-sminkon-auth": "git@github.com:articstudio/pigmento-sminkon-auth.git"
     }
   }
 }

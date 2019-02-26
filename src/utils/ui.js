@@ -70,6 +70,9 @@ let constructor = function (app) {
         error: function (txt) {
             console.log(colors.red(txt));
         },
+        success: function (txt) {
+            console.log(colors.green(txt));
+        },
         comment: function (txt) {
             console.log(txt);
         },

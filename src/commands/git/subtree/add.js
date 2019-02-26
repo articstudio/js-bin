@@ -79,6 +79,7 @@ let constructor = function (app) {
                             app.utils.ui.error('Error adding the package [' + package_name + '] subtree from [' + repository + '].');
                             this.exit(-1);
                         }
+                        app.utils.ui.auccess('The package [' + package_name + '] subtree from [' + repository + '] added succesfully!');
                     });
 
         }
