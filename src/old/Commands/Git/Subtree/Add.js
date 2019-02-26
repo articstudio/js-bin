@@ -8,35 +8,36 @@ let constructor = function () {
     return {
         execute: function () {
             let packages = SubtreesConfig.getSubtrees();
-            let menu_options = packages.concat([{
-                name: "New package",
-                value: "new"
-            }
-            ]);
             let package_name, repository_url, store;
-            AbstractCommand.selectPackageMenu("Subtree packages", menu_options)
-                .then(async function (user_choice) {
-                    if (!user_choice)
-                        process.exit(1);
+            AbstractCommand.selectPackageMenu("Subtree packages", false, [
+                {
+                    name: "New package",
+                    value: "new"
+                }
+            ])
+                    .then(async function (user_choice) {
+                        if (!user_choice)
+                            process.exit(1);
 
-                    package_name = user_choice;
-                    repository_url = packages.find(element => {
-                        return element.name === package_name;
-                    });
-                    repository_url = repository_url !== undefined ? repository_url.url : null;
+                        package_name = user_choice;
 
-                    if (user_choice === 'new') {
-                        await showNewPackageQuestions().then(answers => {
-                            [package_name, repository_url, store] = answers;
-                            if (store) {
-                                WritePackageJson.addSubtreeToPackageJson({[package_name]: repository_url});
-                            }
+                        if (package_name === 'new') {
+                            await showNewPackageQuestions().then(answers => {
+                                [package_name, repository_url, store] = answers;
+                                if (store) {
+                                    WritePackageJson.addSubtreeToPackageJson(package_name, repository_url);
+                                }
+                            });
+                        }
+                        
+                        repository_url = packages.find(element => {
+                            return element.name === package_name;
                         });
-                    }
-                    await addGitSubtree(package_name, repository_url).then(message => {
-                        console.log(message);
+                        repository_url = repository_url !== undefined ? repository_url.url : null;
+                        await addGitSubtree(package_name, repository_url).then(message => {
+                            console.log(message);
+                        });
                     });
-                });
 
         }
     };
@@ -61,12 +62,11 @@ let constructor = function () {
                 message: "Store this package/repository to the Composer config?",
                 default: force_store
             },
-
         ];
         return AbstractCommand.ask(questions)
-            .then(answers => {
-                return [answers.package, answers.url, answers.store];
-            });
+                .then(answers => {
+                    return [answers.package, answers.url, answers.store];
+                });
     }
 
     async function addGitSubtree(package_name, repository_url) {
@@ -75,7 +75,7 @@ let constructor = function () {
 
         if (SubtreesConfig.subtreeExists(package_name)) {
             console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url
-                + '. It already exists');
+                    + '. It already exists');
             process.exit(1);
         }
 
@@ -85,7 +85,7 @@ let constructor = function () {
         AbstractCommand.callShell(cmd_remote_add);
         let {code, stdout, stderr} = AbstractCommand.callShell(cmd_add_subtree);
         if (code === 1) {
-            console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url + '' + "\n"+ stderr);
+            console.error('Error adding the package ' + package_name + ' subtree from ' + repository_url + '' + "\n" + stderr);
             process.exit(1);
         }
         return stdout !== '' ? stdout : stderr;

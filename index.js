@@ -1,32 +1,15 @@
-let app = require('./src/Application');
-const Menu = require('./src/Commands/Menu');
-const clear = require('clear');
+'use strict';
+
 const program = require('commander');
-let executed = false;
+//const program = require('./commander');
+const clear = require('clear');
 
-
-let prepare = function () {
+module.exports = function () {
     clear();
-    app.discoverPackage();
-    app.setSettings();
-    app.registerCommands();
-};
-let run = function () {
-    if (app.noParameters()) {
-        Menu();
-    }
 
-    program.parse(process.argv);
-};
-
-module.exports = {
-    exec: function () {
-        if (executed) {
-            console.log('EXECUTED!');
-            return;
-        }
-        executed = true;
-        prepare();
-        run();
-    }
+    require('./src/application')
+            .loadPackage()
+            .setConsoleProgram(program)
+            .registerLoaders()
+            .run();
 };

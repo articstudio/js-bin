@@ -32,7 +32,7 @@ let constructor = function(config){
                     return _self.callChoiceCallback(choice.menu);
                 });
         }
-    }
+    };
 };
 
 module.exports = constructor;

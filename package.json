@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "bin": "node ./bin/jsbin"
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,8 @@
   },
   "devDependencies": {},
   "config": {
-    "subtree": {}
+    "subtree": {
+      "pigmento-webpack": "git@github.com:articstudio/pigmento-webpack.git"
+    }
   }
 }

@@ -3,7 +3,7 @@ const fs = require('fs');
 const _ = require('lodash');
 
 module.exports = {
-    addSubtreeToPackageJson: function (itemToAdd) {
+    addSubtreeToPackageJson: function (package_name, repository_url) {
         let package_json = app.getPackage();
         let package_json_file = package_json.file;
         let package_json_data = package_json.data;
@@ -11,8 +11,7 @@ module.exports = {
         if (!package_json_data.config.hasOwnProperty('subtree')) {
             package_json_data.config.subtree = {};
         }
-        let subtrees = {...package_json_data.config.subtree, ...itemToAdd};
-        package_json_data.config.subtree = subtrees;
+        package_json_data.config.subtree[package_name] = repository_url;
 
         WritePackageJson(package_json_data, package_json_file);
     },
@@ -57,4 +56,5 @@ function WritePackageJson(config, package_file) {
 
     let json = JSON.stringify(config, null, 2) + '\n';
     fs.writeFileSync(package_file, json);
+    app.loadPackage();
 }

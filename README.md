@@ -10,7 +10,18 @@ npm install js-bin
 
 For launch a interactive menu execute (in the root folder of project):
 ```
-node ./node_modules/.bin/js-bin
+node ./node_modules/.bin/jsbin
+```
+
+OR
+
+Add this script in your `package.json`
+```json
+{
+  "scripts": {
+    "bin": "node ./node_modules/.bin/jsbin"
+  }
+}
 ```
 
 
