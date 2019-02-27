@@ -36,6 +36,9 @@ let constructor = function (app) {
                         app.utils.ui.title('Packages', null, true);
                         
                         packages.forEach(data => {
+                            if (!app.utils.git.existsSubtree(data[0])) {
+                                return;
+                            }
                             let done = app.utils.git.pullSubtree(data[0], data[1], !verbosity);
                             if (!verbosity) {
                                 done ? app.utils.ui.success('+ ' + data[0]) : app.utils.ui.error('- ' + data[0]);
