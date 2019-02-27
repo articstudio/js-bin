@@ -36,6 +36,7 @@ let constructor = function (app) {
     app.addMenuOption(menu_option);
     app.registerCommand(require('./subtree/add')(app));
     app.registerCommand(require('./subtree/pull')(app));
+    app.registerCommand(require('./subtree/remove')(app));
     app.registerCommand(require('./subtree/check')(app));
 };
 

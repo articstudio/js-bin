@@ -14,7 +14,7 @@ let constructor = function (app) {
         return repository ? app.utils.promised(repository) : app.utils.ui.ask('Please enter the URL of the git repository:');
     };
     let getSavePackage = function (save) {
-        return (save !== null) ? app.utils.promised(save) : app.utils.ui.confirm('Store this package/repository to the Composer config?', true);
+        return (save !== null) ? app.utils.promised(save) : app.utils.ui.confirm('Store this package/repository to the package.json?', true);
     };
     let writePackageJson = function (save, package_name, repository) {
         if (!save) {
