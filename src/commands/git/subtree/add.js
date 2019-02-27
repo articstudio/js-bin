@@ -18,7 +18,7 @@ let constructor = function (app) {
     };
     let writePackageJson = function (save, package_name, repository) {
         if (!save) {
-            app.utils.promised(null);
+            return app.utils.promised(null);
         }
         let subtrees = app.utils.package.getSubtrees();
         subtrees[package_name] = repository;
