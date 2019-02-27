@@ -1,2 +1,2 @@
-# pigmento-sminkon-auth
-[READ ONLY] Sminkon Auth
+# pigmento-webpack
+[READ ONLY] Sminkon Webpack
