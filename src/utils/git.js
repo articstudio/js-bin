@@ -55,7 +55,7 @@ let constructor = function (app) {
         commitChanges: function (silent = true) {
             if (!this.hasChanges())
             {
-                app.utils.promised(true);
+                return app.utils.promised(true);
             }
             return app.utils.ui.ask('Commit message:', 'WIP')
                     .then(message => {
