@@ -32,7 +32,7 @@ let app = {
     },
     setConsoleProgram: function (instance) {
         app_data.program = instance;
-        app_data.program.version(app_data.package.version, '-v, --version');
+        app_data.program.version(app_data.package.version, '-V, --version');
         return this;
     },
     getConsoleProgram: function () {
