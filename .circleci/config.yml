@@ -57,7 +57,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: *wd_8
-      - run: node lint
+      - run: node ./bin/jsbin lint
 
   test_node_8:
     executor: "node-8"
@@ -65,7 +65,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: *wd_8
-      - run: node test
+      - run: node ./bin/jsbin test
       
   prepare_node_10:
     executor: "node-10"
@@ -89,7 +89,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: *wd_10
-      - run: node lint
+      - run: node ./bin/jsbin lint
 
   test_node_10:
     executor: "node-10"
@@ -97,7 +97,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: *wd_10
-      - run: node test
+      - run: node ./bin/jsbin test
       
   deploy:
     executor: "node-8"

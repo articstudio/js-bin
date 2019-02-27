@@ -7,7 +7,7 @@ let constructor = function (app) {
         description: 'JavaScript Test',
         alias: 'test',
         action: function () {
-            this.exec('npm test');
+            this.exec('node node_modules/.bin/mocha');
         }
     });
 };
