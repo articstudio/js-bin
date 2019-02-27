@@ -1,0 +1,244 @@
+/* Variables */
+$brand-primary: $prodaisa-blue;
+//$brand-success: #5cb85c;
+$brand-success: #1ab394;
+
+$btn-success-bg: $brand-success;
+$btn-success-border: darken($btn-success-bg, 5%);
+
+$label-success-bg: $brand-success;
+
+$progress-bar-success-bg: $brand-success;
+
+$link-color: $prodaisa-blue;
+$link-hover-color: darken($link-color, 15%);
+$pagination-color: $link-color;
+$pagination-hover-color: $link-hover-color;
+$badge-active-color: $link-color;
+
+$component-active-bg: $prodaisa-blue;
+$dropdown-link-active-bg: $component-active-bg;
+$nav-pills-active-link-hover-bg: $component-active-bg;
+$list-group-active-bg: $component-active-bg;
+$list-group-active-border: $list-group-active-bg;
+$list-group-active-text-color: lighten($list-group-active-bg, 40%);
+
+$btn-primary-bg: $prodaisa-blue;
+$btn-primary-border: darken($btn-primary-bg, 5%);
+
+$pagination-active-bg: $prodaisa-blue;
+$pager-active-bg: $pagination-active-bg;
+
+$pagination-active-border: $prodaisa-blue;
+
+$label-primary-bg: $prodaisa-blue;
+
+$progress-bar-bg: $prodaisa-blue;
+
+$panel-primary-border: $prodaisa-blue;
+
+$panel-primary-heading-bg: $prodaisa-blue;
+
+/* Overrides */
+@include text-emphasis-variant('.text-primary', $brand-primary);
+@include bg-variant('.bg-primary', $brand-primary);
+
+
+a {
+    color: $link-color;
+
+    &:hover,
+        &:focus {
+        color: $link-hover-color;
+    }
+}
+
+.btn-link {
+    color: $link-color;
+    &:hover,
+        &:focus {
+        color: $link-hover-color;
+    }
+}
+.btn-primary {
+    @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
+}
+.btn-primary {
+    // Bootstrap theme
+    //@include btn-styles($btn-primary-bg);
+}
+.btn-success {
+  @include button-variant($btn-success-color, $btn-success-bg, $btn-success-border);
+}
+.btn-success {
+    // Bootstrap theme
+    //@include btn-styles($btn-success-bg);
+}
+.btn {
+    &.dim {
+        &.btn-primary {
+            @include button-dim-variant($brand-primary);
+        }
+        &.btn-success {
+            @include button-dim-variant($brand-success);
+        }
+    }
+}
+a.btn {
+    color:$grey;
+    &.btn-primary,
+    &.btn-success,
+    &.btn-danger,
+    &.btn-warning,
+    &.btn-info {
+        color:$white;
+        &.btn-outline {
+            color:$grey;
+        }
+    }
+}
+
+.label-primary {
+    @include label-variant($label-primary-bg);
+}
+.label-success {
+  @include label-variant($label-success-bg);
+}
+
+.nav {
+    .open > a {
+        &,
+        &:hover,
+            &:focus {
+            border-color: $link-color;
+        }
+    }
+}
+
+a.thumbnail:hover,
+a.thumbnail:focus,
+a.thumbnail.active {
+    border-color: $link-color;
+}
+
+.pagination {
+    > li {
+        > a,
+        > span {
+            color: $pagination-color;
+        }
+    }
+    > li > a,
+    > li > span {
+        &:hover,
+            &:focus {
+            color: $pagination-hover-color;
+        }
+    }
+
+
+    > .active > a,
+    > .active > span {
+        &,
+        &:hover,
+            &:focus {
+            background-color: $pagination-active-bg;
+            border-color: $pagination-active-border;
+            color:$white;
+        }
+    }
+}
+
+.nav-pills {
+    > li {
+        &.active > a {
+            &,
+            &:hover,
+                &:focus {
+                background-color: $nav-pills-active-link-hover-bg;
+            }
+        }
+    }
+}
+
+.list-group-item {
+    &.active,
+    &.active:hover,
+        &.active:focus {
+        background-color: $list-group-active-bg;
+        border-color: $list-group-active-border;
+        .list-group-item-text {
+            color: $list-group-active-text-color;
+        }
+    }
+}
+.list-group-item.active,
+.list-group-item.active:hover,
+.list-group-item.active:focus {
+    text-shadow: 0 -1px 0 darken($list-group-active-bg, 10%);
+    @include gradient-vertical($start-color: $list-group-active-bg, $end-color: darken($list-group-active-bg, 7.5%));
+    border-color: darken($list-group-active-border, 7.5%);
+}
+
+.list-group-item.active > &,
+.nav-pills > .active > a > & {
+    color: $badge-active-color;
+}
+
+.dropdown-menu > .active > a {
+    &,
+    &:hover,
+        &:focus {
+        background-color: $dropdown-link-active-bg;
+    }
+}
+.dropdown-menu > .active > a,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus {
+    @include gradient-vertical($start-color: $dropdown-link-active-bg, $end-color: darken($dropdown-link-active-bg, 5%));
+    background-color: darken($dropdown-link-active-bg, 5%);
+}
+
+.progress-bar {
+    background-color: $progress-bar-bg;
+}
+.progress-bar {
+    // Bootstrap theme
+    //@include progress-bar-styles($progress-bar-bg);
+}
+.progress-bar-success {
+  @include progress-bar-variant($progress-bar-success-bg);
+}
+.progress-bar-success {
+    //@include progress-bar-styles($progress-bar-success-bg);
+}
+
+
+.panel-primary {
+    @include panel-variant($panel-primary-border, $panel-primary-text, $panel-primary-heading-bg, $panel-primary-border);
+}
+.panel-primary > .panel-heading   {
+    a {
+        &, &:hover, &:active {
+            color:$white;
+        }
+    }
+    // Bootstrap theme
+    //@include panel-heading-styles($panel-primary-heading-bg);
+}
+
+.bg-muted {
+    color:$white;
+}
+
+
+@media (max-width: $grid-float-breakpoint-max) {
+    .navbar .navbar-nav .open .dropdown-menu > .active > a {
+        &,
+        &:hover,
+            &:focus {
+            color: #fff;
+            @include gradient-vertical($start-color: $dropdown-link-active-bg, $end-color: darken($dropdown-link-active-bg, 5%));
+        }
+    }
+}

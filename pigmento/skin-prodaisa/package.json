@@ -1,0 +1,24 @@
+{
+  "name": "pigmento-skin-prodaisa",
+  "version": "0.1.0",
+  "description": "Pigmento Skin Prodaisa",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/articstudio/pigmento-skin-prodaisa.git"
+  },
+  "keywords": [],
+  "author": [
+    {
+      "name": "Artic studio",
+      "email": "developers@articstudio.com"
+    }
+  ],
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/articstudio/pigmento-skin-prodaisa",
+  "devDependencies": {},
+  "dependencies": {
+    "bootstrap-sass": "^3.3.7"
+  }
+}
