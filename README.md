@@ -1,2 +1,2 @@
-# pigmento-webpack
-[READ ONLY] Sminkon Webpack
+# pigmento-skin-prodaisa
+[READ ONLY] Skin - Prodaisa
