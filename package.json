@@ -1,10 +1,12 @@
 {
   "name": "@articstudio/js-bin",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "node ./bin/jsbin test",
+    "lint": "node ./bin/jsbin lint",
+    "bin": "node ./bin/jsbin"
   },
   "repository": {
     "type": "git",
@@ -33,7 +35,5 @@
     "jsbin": "bin/jsbin"
   },
   "devDependencies": {},
-  "config": {
-    "subtree": {}
-  }
+  "config": {}
 }

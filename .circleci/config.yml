@@ -1,0 +1,144 @@
+version: 2.1
+
+executors:
+  "node-8":
+    docker:
+      - image: circleci/node:8
+    working_directory: ~/repo_node_8
+  "node-10":
+    docker:
+      - image: circleci/node:10
+    working_directory: ~/repo_node_10
+
+aliases:
+  - &node_8_cache_key
+    node-8-{{ checksum "package-lock.json" }}
+  - &wd_8
+    ~/repo_node_8
+  - &node_10_cache_key
+    node-10-{{ checksum "package-lock.json" }}
+  - &wd_10
+    ~/repo_node_10
+  - &ignore_non_dev_branches
+    filters:
+      tags:
+        only: /.*/
+      branches:
+        ignore:
+          - gh-pages
+          - assets
+          - l10n_master
+          - /release\/.*/
+  - &execute_on_release
+    filters:
+      tags:
+        only: /v?[0-9]+(\.[0-9]+)+([-+\.][0-9a-zA-Z]+)*/
+      branches:
+        ignore: /.*/
+
+jobs:
+  prepare_node_8:
+    executor: "node-8"
+    steps:
+      - checkout
+      - restore_cache:
+          key: *node_8_cache_key
+      - run: npm install --no-progress
+      - save_cache:
+          key: *node_8_cache_key
+          paths:
+            - node_modules/
+      - persist_to_workspace:
+          root: *wd_8
+          paths:
+            - ./*
+
+  lint_node_8:
+    executor: "node-8"
+    steps:
+      - checkout
+      - attach_workspace:
+          at: *wd_8
+      - run: node ./bin/jsbin lint
+
+  test_node_8:
+    executor: "node-8"
+    steps:
+      - checkout
+      - attach_workspace:
+          at: *wd_8
+      - run: node ./bin/jsbin test
+      
+  prepare_node_10:
+    executor: "node-10"
+    steps:
+      - checkout
+      - restore_cache:
+          key: *node_10_cache_key
+      - run: npm install --no-progress
+      - save_cache:
+          key: *node_10_cache_key
+          paths:
+            - node_modules/
+      - persist_to_workspace:
+          root: *wd_10
+          paths:
+            - ./*
+
+  lint_node_10:
+    executor: "node-10"
+    steps:
+      - checkout
+      - attach_workspace:
+          at: *wd_10
+      - run: node ./bin/jsbin lint
+
+  test_node_10:
+    executor: "node-10"
+    steps:
+      - checkout
+      - attach_workspace:
+          at: *wd_10
+      - run: node ./bin/jsbin test
+      
+  deploy:
+    executor: "node-8"
+    steps:
+      - attach_workspace:
+          at: *wd_8
+      - run: npm set registry https://registry.npmjs.org/
+      - run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/repo_node_8/.npmrc
+      - run: npm publish --tag ${CIRCLE_TAG}
+
+
+workflows:
+  version: 2
+  node_10:
+    jobs:
+      - prepare_node_10:
+          <<: *ignore_non_dev_branches
+      - lint_node_10:
+          requires:
+            - prepare_node_10
+          <<: *ignore_non_dev_branches
+      - test_node_10:
+          requires:
+            - prepare_node_10
+          <<: *ignore_non_dev_branches
+  node_8:
+    jobs:
+      - prepare_node_8:
+          <<: *ignore_non_dev_branches
+      - lint_node_8:
+          requires:
+            - prepare_node_8
+          <<: *ignore_non_dev_branches
+      - test_node_8:
+          requires:
+            - prepare_node_8
+          <<: *ignore_non_dev_branches
+      - deploy:
+          requires:
+            - prepare_node_8
+            - test_node_8
+          <<: *execute_on_release
