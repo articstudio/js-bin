@@ -11,6 +11,8 @@ let constructor = function (app) {
             let saveds = Object.keys(app.utils.package.getSubtrees());
             let founds = app.utils._.intersection(saveds, existing);
 
+            app.utils.ui.title('Packages diff', null, true);
+
             app.utils.ui.title('Package.json + Git subtree');
             founds.forEach(package_name => {
                 app.utils.ui.success('> ' + package_name);

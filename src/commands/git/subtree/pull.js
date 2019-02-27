@@ -33,7 +33,8 @@ let constructor = function (app) {
 
                         let resume = app.utils.ui.getPackagesResume();
 
-                        app.utils.ui.title('Packages');
+                        app.utils.ui.title('Packages', null, true);
+                        
                         packages.forEach(data => {
                             let done = app.utils.git.pullSubtree(data[0], data[1], !verbosity);
                             if (!verbosity) {

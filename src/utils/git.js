@@ -28,7 +28,7 @@ let constructor = function (app) {
         },
         pullSubtree: function (package_name, repository, silent = true) {
             if (!silent) {
-                app.utils.ui.title('Git subtree add:', package_name);
+                app.utils.ui.title('Git subtree pull:', package_name);
             }
             let directory = app.utils.package.getDirectoryByName(package_name);
             let response = app.utils.shell.call('git subtree pull --prefix=' + directory + '/ ' + repository + ' master --squash', app.getPath(), silent);

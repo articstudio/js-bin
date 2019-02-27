@@ -73,8 +73,12 @@ let constructor = function (app) {
         success: function (txt) {
             console.log(colors.green(txt));
         },
-        title: function (txt, comment) {
+        title: function (txt, comment, separator) {
             console.log(colors.bold(txt), (comment || ''));
+            if (separator) {
+                console.log(colors.bold('--------------------'));
+                this.lb();
+            }
         },
         comment: function (txt) {
             console.log(txt);
