@@ -2,6 +2,8 @@
 
 let constructor = function (app) {
 
+    let verbosity = false;
+
     let getPackageName = function (package_name) {
         return package_name ? app.utils.promised(package_name) : app.utils.ui.selectPackage(false, [{name: 'New Package', value: 'new'}]);
     };
@@ -23,20 +25,16 @@ let constructor = function (app) {
         app.writePackage(app.utils.package.setSubtrees(app.getPackage(), subtrees));
         app.utils.promised(null);
     };
-    let addSubtree = function(package_name, repository) {
-        return app.utils.git.commitChanges()
-                .then(result => {
-                    return result ? app.utils.git.addSubtree(package_name, repository) : false;
-                });
-    };
 
     return app.abstracts.command.extend({
         name: 'git:subtree:add [package-name] [repository]',
         description: 'Git add subtree',
         options: [
             ['-s, --save <b>', 'Save in package.json', app.utils.parseBool],
+            ['-v, --verbosity', 'Verbosity']
         ],
         action: function (package_name, repository, cmd) {
+            verbosity = cmd.verbosity || false;
             let save = (!!cmd.save === cmd.save) ? cmd.save : null;
             let use_save = !!repository;
             getPackageName(package_name)
@@ -62,6 +60,7 @@ let constructor = function (app) {
                     .then(result => {
                         if (!result)
                         {
+                            app.utils.ui.error('Error adding the package [' + package_name + '] subtree. Repository not found!');
                             this.exit();
                         }
                         repository = result;
@@ -72,14 +71,25 @@ let constructor = function (app) {
                         return writePackageJson(save, package_name, repository);
                     })
                     .then(result => {
-                        return addSubtree(package_name, repository);
+                        return app.utils.git.commitChanges(!verbosity);
                     })
                     .then(result => {
                         if (!result) {
-                            app.utils.ui.error('Error adding the package [' + package_name + '] subtree from [' + repository + '].');
+                            if (!verbosity) {
+                                app.utils.ui.error('Error adding the package [' + package_name + '] subtree. Cannot commit current changes!');
+                            }
                             this.exit(-1);
                         }
-                        app.utils.ui.auccess('The package [' + package_name + '] subtree from [' + repository + '] added succesfully!');
+                        return app.utils.git.addSubtree(package_name, repository, !verbosity);
+                    })
+                    .then(result => {
+                        if (!result) {
+                            if (!verbosity) {
+                                app.utils.ui.error('Error adding the package [' + package_name + '] subtree. Cannot add subtree!');
+                            }
+                            this.exit(-1);
+                        }
+                        app.utils.ui.success('The package [' + package_name + '] subtree from [' + repository + '] added succesfully!');
                     });
 
         }

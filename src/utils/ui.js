@@ -73,8 +73,27 @@ let constructor = function (app) {
         success: function (txt) {
             console.log(colors.green(txt));
         },
+        title: function (txt, comment) {
+            console.log(colors.bold(txt), (comment || ''));
+        },
         comment: function (txt) {
             console.log(txt);
+        },
+        lb: function () {
+            this.lineBreak();
+        },
+        lineBreak: function () {
+            console.log('');
+        },
+        getPackagesResume: function () {
+            return {
+                skipped: [],
+                done: [],
+                error: [],
+                not_found: [],
+                message: [],
+                err_message: []
+            };
         },
         showPackagesResume: function (result) {
 
