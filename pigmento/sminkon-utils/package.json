@@ -1,39 +1,26 @@
 {
-  "name": "@articstudio/js-bin",
-  "version": "1.0.1",
-  "description": "",
+  "name": "pigmento-sminkon-utils",
+  "version": "0.1.0-alpha",
+  "description": "Pigmento Sminkon utils",
   "main": "index.js",
-  "scripts": {
-    "test": "mocha"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/articstudio/js-bin.git"
+    "url": "git+https://github.com/articstudio/pigmento-sminkon-utils.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/articstudio/js-bin/issues"
-  },
-  "homepage": "https://github.com/articstudio/js-bin#readme",
-  "dependencies": {
-    "clear": "^0.1.0",
-    "colors": "^1.3.3",
-    "commander": "^2.19.0",
-    "inquirer": "^6.2.2",
-    "lodash": "^4.17.11",
-    "shelljs": "^0.8.3",
-    "chai": "^4.2.0",
-    "eslint": "^5.14.1",
-    "mocha": "^6.0.0",
-    "pad": "^2.2.2"
-  },
-  "bin": {
-    "jsbin": "bin/jsbin"
-  },
+  "author": [
+    {
+      "name": "Artic studio",
+      "email": "developers@articstudio.com"
+    }
+  ],
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/articstudio/pigmento-sminkon-utils",
   "devDependencies": {},
-  "config": {
-    "subtree": {}
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "mime": "^2.3.1",
+    "path": "^0.12.7"
   }
 }
