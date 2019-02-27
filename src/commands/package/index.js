@@ -15,23 +15,25 @@ let constructor = function (app) {
                     value: 'package:install'
                 },
                 {
-                    name: 'Subpackage Update',
-                    value: 'package:sub:update'
+                    name: 'Package Update',
+                    value: 'package:update'
                 },
                 {
                     name: 'Subpackage Publish',
-                    value: 'package:sub:publish'
+                    value: 'package:publish'
                 },
                 {
-                    name: 'Subpackage Load',
-                    value: 'package:sub:load'
+                    name: 'Package Load',
+                    value: 'package:load'
                 }
             ]
         })
     };
     app.addMenuOption(menu_option);
     app.registerCommand(require('./install')(app));
-    app.registerCommand(require('./subpackage/update')(app));
+    app.registerCommand(require('./update')(app));
+    app.registerCommand(require('./publish')(app));
+    app.registerCommand(require('./load')(app));
 };
 
 module.exports = constructor;

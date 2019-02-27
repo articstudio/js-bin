@@ -33,10 +33,10 @@
   "bin": {
     "jsbin": "bin/jsbin"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "angular": "^1.7.7"
+  },
   "config": {
-    "subtree": {
-      "pigmento-subpackage": "git@github.com:articstudio/pigmento-subpackage.git"
-    }
+    "subtree": {}
   }
 }

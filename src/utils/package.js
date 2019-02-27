@@ -67,7 +67,10 @@ let constructor = function (app) {
             return dir_arr.join('-');
         },
         getPackageFullname: function (package_name, version) {
-            return package_name + (version ? ':' + version : '');
+            return package_name + (version ? '@' + version : '');
+        },
+        getAllDependencies: function (data) {
+            return app.utils._.assign({}, data.devDependencies, data.dependencies);
         },
         install: function (package_name, version, save_dev, silent = true) {
             let package_str = this.getPackageFullname(package_name, version);
@@ -78,6 +81,19 @@ let constructor = function (app) {
             let response = app.utils.shell.call('npm install ' + save_attr + ' ' + package_str, app.getPath(), silent);
             if (response.code !== 0 && !silent) {
                 app.utils.ui.error('Error installing the package [' + package_str + '].');
+                //app.utils.ui.comment(response.stdout);
+                app.utils.ui.lb();
+            }
+            return response.code === 0;
+        },
+        publish: function (package_name, silent = true) {
+            let directory = this.getDirectoryByName(package_name);
+            if (!silent) {
+                app.utils.ui.title('Package publish:', package_name);
+            }
+            let response = app.utils.shell.call('cd ' + directory + ' && npm publish', app.getPath(), silent);
+            if (response.code !== 0 && !silent) {
+                app.utils.ui.error('Error publishing the package [' + package_name + '].');
                 //app.utils.ui.comment(response.stdout);
                 app.utils.ui.lb();
             }

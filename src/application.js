@@ -36,7 +36,7 @@ let app = {
             return false;
         }
         this.loadPackage();
-        return true;
+        return this.getPackageVersion(package_name);
     },
     getPackageVersion: function(package_name) {
         return this.utils.package.getVersionByData(package_name, this.getPackage());

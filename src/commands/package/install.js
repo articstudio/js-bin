@@ -8,7 +8,7 @@ let constructor = function (app) {
         return package_name ? app.utils.promised(package_name) : app.utils.ui.selectPackage(false);
     };
     let getNewPackageName = function (package_name) {
-        return (package_name === 'new') ? app.utils.ui.ask('Please enter the name of the package (<package-name>[:<version>]):') : app.utils.promised(package_name);
+        return (!package_name) ? app.utils.ui.ask('Please enter the name of the package (<package-name>[:<version>]):') : app.utils.promised(package_name);
     };
     let getSaveDevPackage = function (save) {
         return (save !== null) ? app.utils.promised(save) : app.utils.ui.confirm('Save this package in devDependencies?', true);
@@ -48,7 +48,7 @@ let constructor = function (app) {
                         {
                             this.exit();
                         }
-                        [package_name, version] = result.split(':');
+                        [package_name, version] = result.split('@');
                         version = version || null;
                         return getPackageName(target_package_name);
                     })
@@ -81,7 +81,7 @@ let constructor = function (app) {
                             }
                             this.exit(-1);
                         }
-                        version = app.getPackageVersion(package_name);
+                        version = result;
                         return writePackageJson(package_name, version, save_dev, target_package_name);
                     })
                     .then(result => {

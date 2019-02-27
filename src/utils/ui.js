@@ -64,14 +64,14 @@ let constructor = function (app) {
             menu_options = menu_options.concat(extra || []);
             return this.menu('Subtree packages', menu_options);
         },
-        warning: function (txt) {
-            console.log(colors.yellow(txt));
+        warning: function (txt, comment) {
+            console.log(colors.yellow(txt), (comment || ''));
         },
-        error: function (txt) {
-            console.log(colors.red(txt));
+        error: function (txt, comment) {
+            console.log(colors.red(txt), (comment || ''));
         },
-        success: function (txt) {
-            console.log(colors.green(txt));
+        success: function (txt, comment) {
+            console.log(colors.green(txt), (comment || ''));
         },
         title: function (txt, comment, separator) {
             console.log(colors.bold(txt), (comment || ''));
@@ -79,6 +79,9 @@ let constructor = function (app) {
                 console.log(colors.bold('--------------------'));
                 this.lb();
             }
+        },
+        subtitle: function (txt) {
+            console.log(colors.underline(txt));
         },
         comment: function (txt) {
             console.log(txt);

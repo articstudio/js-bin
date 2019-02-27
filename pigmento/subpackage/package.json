@@ -1,6 +1,6 @@
 {
   "name": "pigmento-subpackage",
-  "version": "1.0.1",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {},
@@ -16,6 +16,8 @@
   },
   "homepage": "https://github.com/articstudio/pigmento-subpackage#readme",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "angular": "^1.7.7"
+  },
   "config": {}
 }
