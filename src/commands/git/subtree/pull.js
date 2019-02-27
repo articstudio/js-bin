@@ -33,8 +33,9 @@ let constructor = function (app) {
 
                         let resume = app.utils.ui.getPackagesResume();
 
+                        app.utils.ui.lb();
                         app.utils.ui.title('Packages', null, true);
-                        
+
                         packages.forEach(data => {
                             if (!app.utils.git.existsSubtree(data[0])) {
                                 return;
