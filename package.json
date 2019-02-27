@@ -1,6 +1,6 @@
 {
   "name": "@articstudio/js-bin",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -33,10 +33,6 @@
   "bin": {
     "jsbin": "bin/jsbin"
   },
-  "devDependencies": {
-    "angular": "^1.7.7"
-  },
-  "config": {
-    "subtree": {}
-  }
+  "devDependencies": {},
+  "config": {}
 }

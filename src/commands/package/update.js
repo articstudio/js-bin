@@ -2,8 +2,6 @@
 
 let constructor = function (app) {
 
-    let verbosity = false;
-
     let getPackageName = function (package_name) {
         return package_name ? app.utils.promised(package_name) : app.utils.ui.selectPackage(true);
     };
@@ -43,11 +41,7 @@ let constructor = function (app) {
     return app.abstracts.command.extend({
         name: 'package:update [package-name]',
         description: 'Package Update',
-        options: [
-            ['-v, --verbosity', 'Verbosity']
-        ],
-        action: function (package_name, cmd) {
-            verbosity = cmd.verbosity || false;
+        action: function (package_name) {
             let packages = [];
             let versions = app.utils.package.getAllDependencies(app.getPackage());
             getPackageName(package_name)

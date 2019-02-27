@@ -10,7 +10,7 @@ let constructor = function (app) {
         ui: require('./ui')(app),
         extend: require('./extend')(app),
         _: require('lodash'),
-        promised: function(result, cb){
+        promised: function(result){
             return new Promise(resolve => {
                 resolve(result);
             });

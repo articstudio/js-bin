@@ -27,7 +27,7 @@ let constructor = function (app) {
         let data = app.utils.package.loadData(directory);
         data = app.utils.package.addPackageToData(package_name, version, data, save_dev);
         app.utils.package.writeData(data, directory);
-        return app.utils.promised(null);;
+        return app.utils.promised(null);
     };
 
     return app.abstracts.command.extend({

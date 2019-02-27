@@ -70,7 +70,7 @@ let constructor = function (app) {
                         save = result;
                         return writePackageJson(save, package_name, repository);
                     })
-                    .then(result => {
+                    .then(() => {
                         return app.utils.git.commitChanges(!verbosity);
                     })
                     .then(result => {
