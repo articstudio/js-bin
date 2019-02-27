@@ -10,7 +10,7 @@ let constructor = function (app) {
         },
         existsSubtree: function (package_name) {
             let directory = app.utils.package.getDirectoryByName(package_name);
-            if (app.utils._indexOf(this.checkSubtrees(), directory) < 0) {
+            if (app.utils._.indexOf(this.checkSubtrees(), directory) < 0) {
                 return false;
             }
             return app.utils.shell.call('find . -type d -wholename "./' + directory + '"', app.getPath(), true).stdout !== '';
