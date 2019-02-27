@@ -108,7 +108,7 @@ jobs:
           at: *wd_8
       - run: npm set registry https://registry.npmjs.org/
       - run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/repo_node_8/.npmrc
-      - run: npm publish --tag ${CIRCLE_TAG}
+      - run: npm publish
 
 
 workflows:
