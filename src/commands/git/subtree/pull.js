@@ -43,6 +43,7 @@ let constructor = function (app) {
                             if (!verbosity) {
                                 done ? app.utils.ui.success('+ ' + data[0]) : app.utils.ui.error('- ' + data[0]);
                             }
+                            app.utils.ui.lb();
                         });
                     });
 

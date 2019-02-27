@@ -5,7 +5,6 @@ const fs = require('fs');
 let constructor = function (app) {
     return {
         hasChanges: function () {
-            console.log('diff', app.utils.shell.call('git diff --exit-code', app.getPath(), true).code);
             return app.utils.shell.call('git diff --exit-code', app.getPath(), true).code !== 0;
         },
         existsSubtree: function (package_name) {
