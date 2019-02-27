@@ -22,7 +22,7 @@ let constructor = function (app) {
             let response = app.utils.shell.call('git remote add ' + directory + ' ' + repository + ' && git subtree add --prefix=' + directory + '/ ' + repository + ' master', app.getPath(), silent);
             if (response !== 0 && !silent) {
                 app.utils.ui.error('Error adding the package [' + package_name + '] subtree from [' + repository + '].');
-                app.utils.ui.comment(response.stdout);
+                //app.utils.ui.comment(response.stdout);
             }
             return response.code === 0;
         },
@@ -34,7 +34,7 @@ let constructor = function (app) {
             let response = app.utils.shell.call('git subtree pull --prefix=' + directory + '/ ' + repository + ' master --squash', app.getPath(), silent);
             if (response !== 0 && !silent) {
                 app.utils.ui.error('Error commiting current changes.');
-                app.utils.ui.comment(response.stdout);
+                //app.utils.ui.comment(response.stdout);
             }
             return response.code === 0;
         },
@@ -45,14 +45,14 @@ let constructor = function (app) {
             let response = app.utils.shell.call('git commit -m "' + message + '" ' + files, app.getPath(), silent);
             if (response !== 0 && !silent) {
                 app.utils.ui.error('Error commiting current changes.');
-                app.utils.ui.comment(response.stdout);
+                //app.utils.ui.comment(response.stdout);
             }
             return response.code === 0;
         },
         commitChanges: function (silent = true) {
             if (!this.hasChanges())
             {
-                app.utils.promised({code: 0, stdout: '', stderr: ''});
+                app.utils.promised(true);
             }
             return app.utils.ui.ask('Commit message:', 'WIP')
                     .then(message => {
