@@ -40,6 +40,19 @@ let constructor = function (app) {
             }
             return response.code === 0;
         },
+        pushSubtree: function (package_name, repository, silent = true) {
+            if (!silent) {
+                app.utils.ui.title('Git subtree push:', package_name);
+            }
+            let directory = app.utils.package.getDirectoryByName(package_name);
+            let response = app.utils.shell.call('git subtree push --prefix=' + directory +  '/ ' + repository + ' master', app.getPath(), silent);
+            if (response.code !== 0 && !silent) {
+                app.utils.ui.error('Error pushing the package [' + package_name + '] subtree from [' + repository + '].');
+                //app.utils.ui.comment(response.stdout);
+                app.utils.ui.lb();
+            }
+            return response.code === 0;
+        },
         removeSubtree: function (package_name, repository, silent = true) {
             if (!silent) {
                 app.utils.ui.title('Git subtree remove:', package_name);

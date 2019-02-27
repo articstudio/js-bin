@@ -33,7 +33,6 @@ let constructor = function (app) {
             verbosity = cmd.verbosity || false;
             let packages = [];
             let save = (!!cmd.save === cmd.save) ? cmd.save : null;
-            console.log(0, save);
             getPackageName(package_name)
                     .then(result => {
                         packages = (result === 'all') ? app.utils.package.getSubtrees(true) : [[result, app.utils.package.getSubtreeRepository(result)]];
@@ -41,7 +40,6 @@ let constructor = function (app) {
                     })
                     .then(result => {
                         save = result;
-                        console.log(1, save);
                         return writePackageJson(save, packages);
                     })
                     .then(result => {
