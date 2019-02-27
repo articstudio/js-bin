@@ -4,6 +4,7 @@ let constructor = function (app) {
     return {
         path: require('./path')(app),
         shell: require('./shell')(app),
+        fs: require('./fs')(app),
         package: require('./package')(app),
         git: require('./git')(app),
         ui: require('./ui')(app),

@@ -35,6 +35,8 @@
   },
   "devDependencies": {},
   "config": {
-    "subtree": {}
+    "subtree": {
+      "pigmento-subpackage": "git@github.com:articstudio/pigmento-subpackage.git"
+    }
   }
 }

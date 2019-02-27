@@ -1,18 +1,22 @@
 'use strict';
 
-const fs = require('fs');
-
 let constructor = function (app) {
     return {
         getRealpath: function (path) {
             return app.utils.path.resolve(path || app.getPath(), 'package.json');
+        },
+        checkExists: function (path) {
+            return app.utils.fs.exists(this.getRealpath(path));
+        },
+        checkExistsByName: function (package_name) {
+            return this.checkExists(this.getDirectoryByName(package_name));
         },
         loadData: function (path) {
             return require(this.getRealpath(path));
         },
         writeData: function (data, path) {
             let json = JSON.stringify(data, null, 2) + '\n';
-            fs.writeFileSync(this.getRealpath(path), json);
+            app.utils.fs.write(this.getRealpath(path), json);
             return this;
         },
         getPackagesJson: function (path) {
@@ -20,6 +24,30 @@ let constructor = function (app) {
                     .filter(function (fname) {
                         return !(fname.indexOf('node_modules') > -1 || fname[0] === '.') && app.utils.path.basename(fname) === 'package.json';
                     });
+        },
+        getVersionByData: function (package_name, data) {
+            if (data.dependencies && package_name in data.dependencies) {
+                return data.dependencies[package_name];
+            }
+            if (data.devDependencies && package_name in data.devDependencies) {
+                return data.devDependencies[package_name];
+            }
+            return false;
+        },
+        addPackageToData: function (package_name, version, data, save_dev) {
+            if (save_dev) {
+                if (data.dependencies && package_name in data.dependencies) {
+                    delete data.dependencies[package_name];
+                }
+                data.devDependencies[package_name] = version;
+            }
+            if (!save_dev) {
+                if (data.devDependencies && package_name in data.devDependencies) {
+                    delete data.devDependencies[package_name];
+                }
+                data.dependencies[package_name] = version;
+            }
+            return data;
         },
         getNameByDirectory: function (dir) {
             let dir_arr = dir.split('/');
@@ -37,6 +65,23 @@ let constructor = function (app) {
                 dir_arr.splice(0, 2, dir_arr[0] + '/' + dir_arr[1]);
             }
             return dir_arr.join('-');
+        },
+        getPackageFullname: function (package_name, version) {
+            return package_name + (version ? ':' + version : '');
+        },
+        install: function (package_name, version, save_dev, silent = true) {
+            let package_str = this.getPackageFullname(package_name, version);
+            let save_attr = save_dev ? '--save-dev' : '--save';
+            if (!silent) {
+                app.utils.ui.title('Package install:', package_str);
+            }
+            let response = app.utils.shell.call('npm install ' + save_attr + ' ' + package_str, app.getPath(), silent);
+            if (response.code !== 0 && !silent) {
+                app.utils.ui.error('Error installing the package [' + package_str + '].');
+                //app.utils.ui.comment(response.stdout);
+                app.utils.ui.lb();
+            }
+            return response.code === 0;
         },
         setSubtrees: function (data, subtrees) {
             data.config.subtree = subtrees;

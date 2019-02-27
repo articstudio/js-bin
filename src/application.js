@@ -6,7 +6,8 @@ let app_data = {
     path: process.cwd(),
     loaders: [
         './commands/git/',
-        './commands/js/'
+        './commands/js/',
+        './commands/package/'
     ],
     menu_options: [],
     menu: null
@@ -29,6 +30,16 @@ let app = {
         this.utils.package.writeData(data, app_data.path);
         app_data.package = data;
         return this;
+    },
+    installPackage: function (package_name, version, silent = true) {
+        if (!this.utils.package.install(package_name, version, true, silent)) {
+            return false;
+        }
+        this.loadPackage();
+        return true;
+    },
+    getPackageVersion: function(package_name) {
+        return this.utils.package.getVersionByData(package_name, this.getPackage());
     },
     setConsoleProgram: function (instance) {
         app_data.program = instance;

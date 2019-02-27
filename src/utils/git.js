@@ -1,7 +1,5 @@
 'use strict';
 
-const fs = require('fs');
-
 let constructor = function (app) {
     return {
         hasChanges: function () {
