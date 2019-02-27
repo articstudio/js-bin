@@ -32,13 +32,9 @@ aliases:
   - &execute_on_release
     filters:
       tags:
-        only: /^v.*/
+        only: /v?[0-9]+(\.[0-9]+)+([-+\.][0-9a-zA-Z]+)*/
       branches:
-        ignore:
-          - gh-pages
-          - assets
-          - l10n_master
-          - /release\/.*/
+        ignore: /.*/
 
 jobs:
   prepare_node_8:
