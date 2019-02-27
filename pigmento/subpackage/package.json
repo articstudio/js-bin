@@ -1,0 +1,21 @@
+{
+  "name": "pigmento-subpackage",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/articstudio/pigmento-subpackage.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/articstudio/pigmento-subpackage/issues"
+  },
+  "homepage": "https://github.com/articstudio/pigmento-subpackage#readme",
+  "dependencies": {},
+  "devDependencies": {},
+  "config": {}
+}
