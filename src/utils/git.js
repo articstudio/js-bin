@@ -34,7 +34,20 @@ let constructor = function (app) {
             let directory = app.utils.package.getDirectoryByName(package_name);
             let response = app.utils.shell.call('git subtree pull --prefix=' + directory + '/ ' + repository + ' master --squash', app.getPath(), silent);
             if (response.code !== 0 && !silent) {
-                app.utils.ui.error('Error commiting current changes.');
+                app.utils.ui.error('Error pulling the package [' + package_name + '] subtree from [' + repository + '].');
+                //app.utils.ui.comment(response.stdout);
+                app.utils.ui.lb();
+            }
+            return response.code === 0;
+        },
+        removeSubtree: function (package_name, repository, silent = true) {
+            if (!silent) {
+                app.utils.ui.title('Git subtree remove:', package_name);
+            }
+            let directory = app.utils.package.getDirectoryByName(package_name);
+            let response = app.utils.shell.call('git remote rm ' + directory + ' && git rm -r ' + directory + '/ && rm -r ' + directory + '/', app.getPath(), silent);
+            if (response.code !== 0 && !silent) {
+                app.utils.ui.error('Error removing the package [' + package_name + '] subtree from [' + repository + '].');
                 //app.utils.ui.comment(response.stdout);
                 app.utils.ui.lb();
             }

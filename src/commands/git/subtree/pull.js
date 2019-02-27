@@ -26,7 +26,7 @@ let constructor = function (app) {
                     .then(result => {
                         if (!result) {
                             if (!verbosity) {
-                                app.utils.ui.error('Error pulling the package [' + package_name + '] subtree. Cannot commit current changes!');
+                                app.utils.ui.error('Error pulling the packages subtrees. Cannot commit current changes!');
                             }
                             this.exit(-1);
                         }
@@ -40,7 +40,7 @@ let constructor = function (app) {
                             }
                             let done = app.utils.git.pullSubtree(data[0], data[1], !verbosity);
                             if (!verbosity) {
-                                done ? app.utils.ui.success('+ ' + data[0]) : app.utils.ui.error('- ' + data[0]);
+                                done ? app.utils.ui.success('+ ' + data[0]) : app.utils.ui.error('! ' + data[0]);
                             }
                             app.utils.ui.lb();
                         });

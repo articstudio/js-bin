@@ -35,11 +35,6 @@
   },
   "devDependencies": {},
   "config": {
-    "subtree": {
-      "pigmento-sminkon-utils": "git@github.com:articstudio/pigmento-sminkon-utils.git",
-      "pigmento-webpack": "git@github.com:articstudio/pigmento-webpack.git",
-      "pigmento-skin-prodaisa": "git@github.com:articstudio/pigmento-skin-prodaisa.git",
-      "pigmento-sminkon-auth": "git@github.com:articstudio/pigmento-sminkon-auth.git"
-    }
+    "subtree": {}
   }
 }

@@ -10,6 +10,17 @@ let constructor = function (app) {
     let getSavePackages = function (save) {
         return (save !== null) ? app.utils.promised(save) : app.utils.ui.confirm('Remove this packages/repositories to the package.json?', true);
     };
+    let writePackageJson = function (save, packages) {
+        if (!save) {
+            app.utils.promised(null);
+        }
+        let subtrees = app.utils.package.getSubtrees();
+        packages.forEach(data => {
+            delete subtrees[data[0]];
+        });
+        app.writePackage(app.utils.package.setSubtrees(app.getPackage(), subtrees));
+        app.utils.promised(null);
+    };
 
     return app.abstracts.command.extend({
         name: 'git:subtree:remove [package-name]',
@@ -22,17 +33,22 @@ let constructor = function (app) {
             verbosity = cmd.verbosity || false;
             let packages = [];
             let save = (!!cmd.save === cmd.save) ? cmd.save : null;
-            let use_save = !!repository;
             getPackageName(package_name)
                     .then(result => {
                         packages = (result === 'all') ? app.utils.package.getSubtrees(true) : [[result, app.utils.package.getSubtreeRepository(result)]];
-
+                        return getSavePackages(save);
+                    })
+                    .then(result => {
+                        save = result;
+                        return writePackageJson(save, packages);
+                    })
+                    .then(result => {
                         return app.utils.git.commitChanges(!verbosity);
                     })
                     .then(result => {
                         if (!result) {
                             if (!verbosity) {
-                                app.utils.ui.error('Error pulling the package [' + package_name + '] subtree. Cannot commit current changes!');
+                                app.utils.ui.error('Error removing the packages subtrees. Cannot commit current changes!');
                             }
                             this.exit(-1);
                         }
@@ -46,7 +62,10 @@ let constructor = function (app) {
                             }
                             let done = app.utils.git.pullSubtree(data[0], data[1], !verbosity);
                             if (!verbosity) {
-                                done ? app.utils.ui.success('+ ' + data[0]) : app.utils.ui.error('- ' + data[0]);
+                                done ? app.utils.ui.success('- ' + data[0]) : app.utils.ui.error('! ' + data[0]);
+                            }
+                            if (done) {
+                                app.utils.git.commit('Removing ' + data[0] + ' package subtree', '', !verbosity);
                             }
                             app.utils.ui.lb();
                         });
