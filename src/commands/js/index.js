@@ -15,6 +15,18 @@ let constructor = function (app) {
                     value: 'js:lint'
                 },
                 {
+                    name: 'Lint fix',
+                    value: 'js:lint:fix'
+                },
+                {
+                    name: 'Prettier',
+                    value: 'js:prettier'
+                },
+                {
+                    name: 'Prettier fix',
+                    value: 'js:prettier:fix'
+                },
+                {
                     name: 'Test',
                     value: 'js:test'
                 }
@@ -23,6 +35,9 @@ let constructor = function (app) {
     };
     app.addMenuOption(menu_option);
     app.registerCommand(require('./lint')(app));
+    app.registerCommand(require('./lint-fix')(app));
+    app.registerCommand(require('./prettier')(app));
+    app.registerCommand(require('./prettier-fix')(app));
     app.registerCommand(require('./test')(app));
 };
 

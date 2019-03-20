@@ -6,6 +6,9 @@
   "scripts": {
     "test": "node ./bin/jsbin test",
     "lint": "node ./bin/jsbin lint",
+    "lint-fix": "node ./bin/jsbin lint:fix",
+    "prettier": "node ./bin/jsbin prettier",
+    "prettier-fix": "node ./bin/jsbin prettier:fix",
     "bin": "node ./bin/jsbin"
   },
   "repository": {
@@ -29,7 +32,10 @@
     "chai": "^4.2.0",
     "eslint": "^5.14.1",
     "mocha": "^6.0.0",
-    "pad": "^2.2.2"
+    "pad": "^2.2.2",
+    "prettier": "^1.16.4",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-prettier": "^3.0.1"
   },
   "bin": {
     "jsbin": "bin/jsbin"
