@@ -4,12 +4,12 @@ const program = require('commander');
 //const program = require('./commander');
 const clear = require('clear');
 
-module.exports = function () {
+module.exports = function() {
     clear();
 
     require('./src/application')
-            .loadPackage()
-            .setConsoleProgram(program)
-            .registerLoaders()
-            .run();
+        .loadPackage()
+        .setConsoleProgram(program)
+        .registerLoaders()
+        .run();
 };
