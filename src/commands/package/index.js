@@ -26,6 +26,10 @@ let constructor = function(app) {
                     name: 'Package Load',
                     value: 'package:load',
                 },
+                {
+                    name: 'Package Check',
+                    value: 'package:check',
+                },
             ],
         }),
     };
@@ -34,6 +38,7 @@ let constructor = function(app) {
     app.registerCommand(require('./update')(app));
     app.registerCommand(require('./publish')(app));
     app.registerCommand(require('./load')(app));
+    app.registerCommand(require('./check')(app));
 };
 
 module.exports = constructor;
