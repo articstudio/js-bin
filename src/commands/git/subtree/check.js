@@ -1,12 +1,10 @@
 'use strict';
 
-let constructor = function (app) {
-
+let constructor = function(app) {
     return app.abstracts.command.extend({
         name: 'git:subtree:check',
         description: 'Git check subtrees health',
-        action: function () {
-
+        action: function() {
             let existing = app.utils.git.checkSubtrees().map(app.utils.package.getNameByDirectory);
             let saveds = Object.keys(app.utils.package.getSubtrees());
             let founds = app.utils._.intersection(saveds, existing);
@@ -30,10 +28,8 @@ let constructor = function (app) {
                 app.utils.ui.error('> ' + package_name);
             });
             app.utils.ui.lb();
-
-        }
+        },
     });
 };
 
 module.exports = constructor;
-

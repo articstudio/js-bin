@@ -1,16 +1,14 @@
 'use strict';
 
-let constructor = function (app) {
-
+let constructor = function(app) {
     return app.abstracts.command.extend({
         name: 'js:test',
         description: 'JavaScript Test',
         alias: 'test',
-        action: function () {
+        action: function() {
             this.exec('node node_modules/.bin/mocha');
-        }
+        },
     });
 };
 
 module.exports = constructor;
-

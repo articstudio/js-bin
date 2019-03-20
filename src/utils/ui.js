@@ -3,107 +3,105 @@
 const inquirer = require('inquirer');
 const colors = require('colors');
 
-let constructor = function (app) {
+let constructor = function(app) {
     return {
-        prompt: function (questions) {
-            return inquirer
-                    .prompt(questions);
+        prompt: function(questions) {
+            return inquirer.prompt(questions);
         },
-        ask: function (title, answer) {
+        ask: function(title, answer) {
             return this.prompt({
                 type: 'input',
                 message: title,
                 name: 'answer',
-                default: answer || null
+                default: answer || null,
             }).then(response => {
                 return response.answer;
             });
         },
-        confirm: function (title, confirmed = false) {
+        confirm: function(title, confirmed = false) {
             return this.prompt({
                 type: 'confirm',
                 message: title,
                 name: 'confirmed',
-                default: confirmed
+                default: confirmed,
             }).then(response => {
                 return response.confirmed;
             });
         },
-        menu: function (title, choices, opts) {
+        menu: function(title, choices, opts) {
             choices = choices || [];
             opts = opts || {};
             if (opts.backOption || opts.exitOption) {
                 choices.push(new inquirer.Separator());
             }
             if (opts.backOption) {
-                choices.push({name: 'Back', value: 'back'});
+                choices.push({ name: 'Back', value: 'back' });
             }
             if (opts.exitOption) {
-                choices.push({name: 'Exit', value: 'exit'});
+                choices.push({ name: 'Exit', value: 'exit' });
             }
             return this.prompt({
                 type: 'list',
                 message: title,
                 name: 'choice',
                 choices: choices,
-                pageSize: 10
+                pageSize: 10,
             }).then(response => {
                 return response.choice;
             });
         },
-        selectPackage: function (use_all_option, extra) {
+        selectPackage: function(use_all_option, extra) {
             let menu_options = Object.keys(app.utils.package.getSubtrees());
             if (use_all_option) {
                 menu_options = menu_options.concat([
                     {
                         name: 'All subtrees',
-                        value: 'all'
-                    }
+                        value: 'all',
+                    },
                 ]);
             }
             menu_options = menu_options.concat(extra || []);
             return this.menu('Subtree packages', menu_options);
         },
-        warning: function (txt, comment) {
-            console.log(colors.yellow(txt), (comment || ''));
+        warning: function(txt, comment) {
+            console.log(colors.yellow(txt), comment || '');
         },
-        error: function (txt, comment) {
-            console.log(colors.red(txt), (comment || ''));
+        error: function(txt, comment) {
+            console.log(colors.red(txt), comment || '');
         },
-        success: function (txt, comment) {
-            console.log(colors.green(txt), (comment || ''));
+        success: function(txt, comment) {
+            console.log(colors.green(txt), comment || '');
         },
-        title: function (txt, comment, separator) {
-            console.log(colors.bold(txt), (comment || ''));
+        title: function(txt, comment, separator) {
+            console.log(colors.bold(txt), comment || '');
             if (separator) {
                 console.log(colors.bold('--------------------'));
                 this.lb();
             }
         },
-        subtitle: function (txt) {
+        subtitle: function(txt) {
             console.log(colors.underline(txt));
         },
-        comment: function (txt) {
+        comment: function(txt) {
             console.log(txt);
         },
-        lb: function () {
+        lb: function() {
             this.lineBreak();
         },
-        lineBreak: function () {
+        lineBreak: function() {
             console.log('');
         },
-        getPackagesResume: function () {
+        getPackagesResume: function() {
             return {
                 skipped: [],
                 done: [],
                 error: [],
                 not_found: [],
                 message: [],
-                err_message: []
+                err_message: [],
             };
         },
-        showPackagesResume: function (result) {
-
+        showPackagesResume: function(result) {
             console.log('RESUME: '.warn);
             console.log('------------------'.warn);
 
@@ -124,8 +122,10 @@ let constructor = function (app) {
                 console.log('    - ' + repo);
             });
 
-            if ((!result.message || result.message.length === 0) && (!result.err_message || result.err_message.length === 0))
-            {
+            if (
+                (!result.message || result.message.length === 0) &&
+                (!result.err_message || result.err_message.length === 0)
+            ) {
                 return;
             }
 
@@ -133,24 +133,22 @@ let constructor = function (app) {
             console.log('------------------'.warn);
             console.log('');
 
-            if ((result.message && result.message.length > 0))
-            {
+            if (result.message && result.message.length > 0) {
                 console.log('Message: '.warn);
-                result.message.forEach(function (m) {
+                result.message.forEach(function(m) {
                     console.log(m);
                 });
             }
 
-            if ((result.err_message && result.err_message.length > 0))
-            {
+            if (result.err_message && result.err_message.length > 0) {
                 console.log('Error message: '.err);
-                result.err_message.forEach(function (m) {
+                result.err_message.forEach(function(m) {
                     console.log(m);
                 });
             }
 
             console.log('');
-        }
+        },
     };
 };
 

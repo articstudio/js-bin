@@ -2,14 +2,14 @@
 
 const fs = require('fs');
 
-let constructor = function () {
+let constructor = function() {
     return {
-        write: function (filename, path, options) {
+        write: function(filename, path, options) {
             return fs.writeFileSync(filename, path, options);
         },
-        exists: function (filename) {
+        exists: function(filename) {
             return fs.existsSync(filename);
-        }
+        },
     };
 };
 

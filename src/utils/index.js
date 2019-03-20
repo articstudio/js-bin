@@ -1,6 +1,6 @@
 'use strict';
 
-let constructor = function (app) {
+let constructor = function(app) {
     return {
         path: require('./path')(app),
         shell: require('./shell')(app),
@@ -10,14 +10,14 @@ let constructor = function (app) {
         ui: require('./ui')(app),
         extend: require('./extend')(app),
         _: require('lodash'),
-        promised: function(result){
+        promised: function(result) {
             return new Promise(resolve => {
                 resolve(result);
             });
         },
         parseBool: function(v) {
             return v === 'true';
-        }
+        },
     };
 };
 
