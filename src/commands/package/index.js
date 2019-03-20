@@ -1,33 +1,33 @@
 'use strict';
 
-let constructor = function (app) {
+let constructor = function(app) {
     let menu_option = {
         name: 'Package.json',
         value: app.abstracts.menu.extend({
             menu_title: 'Package.json',
             menu_opts: {
                 backOption: false,
-                exitOption: true
+                exitOption: true,
             },
             menu_choices: [
                 {
                     name: 'Package Install',
-                    value: 'package:install'
+                    value: 'package:install',
                 },
                 {
                     name: 'Package Update',
-                    value: 'package:update'
+                    value: 'package:update',
                 },
                 {
                     name: 'Subpackage Publish',
-                    value: 'package:publish'
+                    value: 'package:publish',
                 },
                 {
                     name: 'Package Load',
-                    value: 'package:load'
-                }
-            ]
-        })
+                    value: 'package:load',
+                },
+            ],
+        }),
     };
     app.addMenuOption(menu_option);
     app.registerCommand(require('./install')(app));

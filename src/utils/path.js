@@ -2,17 +2,17 @@
 
 const path = require('path');
 
-let constructor = function () {
+let constructor = function() {
     return {
-        resolve: function () {
+        resolve: function() {
             return path.resolve(...arguments);
         },
-        basename: function(path){
+        basename: function(path) {
             return path.basename(path);
         },
-        dirname: function(path){
+        dirname: function(path) {
             return path.dirname(path);
-        }
+        },
     };
 };
 

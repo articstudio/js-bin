@@ -2,19 +2,19 @@
 
 const shell = require('shelljs');
 
-let constructor = function () {
+let constructor = function() {
     return {
-        call: function (cmd, cwd, silent = true) {
-            let process = shell.exec((cwd ? 'cd ' + cwd + ' && ' : '') + cmd, {silent: silent});
+        call: function(cmd, cwd, silent = true) {
+            let process = shell.exec((cwd ? 'cd ' + cwd + ' && ' : '') + cmd, { silent: silent });
             return {
                 code: process.code,
                 stdout: process.stdout,
-                stderr: process.stderr
+                stderr: process.stderr,
             };
         },
-        find: function (path) {
+        find: function(path) {
             return shell.find(path);
-        }
+        },
     };
 };
 
