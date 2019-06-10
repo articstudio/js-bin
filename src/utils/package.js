@@ -121,6 +121,28 @@ let constructor = function(app) {
         getSubtreeRepository: function(package_name) {
             return app.utils._.get(this.getSubtrees(), package_name, false);
         },
+        getVersionsGroups: function(toPairs) {
+            let data = app.getPackage(),
+                versions = data.config && data.config.versions ? data.config.versions : {};
+            return toPairs ? app.utils._.toPairs(versions) : versions;
+        },
+        getVersionsGroupSubtrees: function(group_name, toPairs) {
+            let data = app.getPackage(),
+                versions = data.config && data.config.versions ? data.config.versions : {},
+                packages = group_name in versions ? versions[group_name] : [],
+                subtrees = this.getSubtrees(toPairs);
+            if (toPairs) {
+                return app.utils._.filter(subtrees, subtree => {
+                    return app.utils._.indexOf(packages, subtree[0]) > -1;
+                });
+            }
+            return app.utils._.filter(subtrees, (value, subtree) => {
+                return app.utils._.indexOf(packages, subtree) > -1;
+            });
+        },
+        getAppVersion: function() {
+            return app.getPackage().version;
+        },
     };
 };
 

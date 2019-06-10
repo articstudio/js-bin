@@ -45,6 +45,14 @@
   "config": {
     "subtree": {
       "git-test": "git@github.com:articstudio/git-test.git"
+    },
+    "versions": {
+      "test": [
+        "git-test"
+      ],
+      "core": [
+        "git-test"
+      ]
     }
   }
 }
