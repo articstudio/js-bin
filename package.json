@@ -43,9 +43,7 @@
   },
   "devDependencies": {},
   "config": {
-    "subtree": {
-      "git-test": "git@github.com:articstudio/git-test.git"
-    },
+    "subtree": {},
     "versions": {
       "test": [
         "git-test"
