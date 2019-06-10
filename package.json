@@ -1,6 +1,6 @@
 {
   "name": "@articstudio/js-bin",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -44,13 +44,6 @@
   "devDependencies": {},
   "config": {
     "subtree": {},
-    "versions": {
-      "test": [
-        "git-test"
-      ],
-      "core": [
-        "git-test"
-      ]
-    }
+    "versions": {}
   }
 }
